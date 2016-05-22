@@ -13,9 +13,10 @@ class ImageDetailViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
 
-    var imageList: [image] {
+    var imageLists: [image] {
         return (UIApplication.sharedApplication().delegate as! AppDelegate).imageList
     }
+    
     
     var DetailedImage : image!
 
@@ -25,6 +26,8 @@ class ImageDetailViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         self.imageView.image = DetailedImage.imageFromLocation
+//        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//        appDelegate.imageList.removeAll()
     }
     
     @IBAction func Dismiss(sender: AnyObject) {

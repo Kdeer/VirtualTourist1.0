@@ -15,10 +15,13 @@ class TestVC2: UIViewController {
     
     
     
+    
     @IBAction func GoT1(sender: AnyObject) {
         
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("TestVC1") as! TestVC1
+        controller.JustANumber = 1
         
-//        self.presentViewController(controller, animated: false, completion: nil)
+        self.navigationController!.pushViewController(controller, animated: true)
     }
     
     

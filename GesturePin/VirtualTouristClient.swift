@@ -94,6 +94,8 @@ class VirtualTouristClient: NSObject {
                 
 //            let imageURLArray = imageInfo.imagesFromResults(photoArray)
             completionHandlerForImages(success: true, result: photosDictionary, error: error)
+            }else {
+                completionHandlerForImages(success: false, result: nil, error: error)
             }
             
         }

@@ -30,6 +30,8 @@
 		148DE8CB1CE2B6DC0021DF33 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DE8CA1CE2B6DC0021DF33 /* Pin.swift */; };
 		148DE8CD1CE2C9BA0021DF33 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DE8CC1CE2C9BA0021DF33 /* ImageCache.swift */; };
 		148DE8CF1CE2E8500021DF33 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DE8CE1CE2E8500021DF33 /* CoreDataStackManager.swift */; };
+		14F871CA1CEFDEDB00515D06 /* LocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F871C91CEFDEDB00515D06 /* LocationTableViewController.swift */; };
+		14F871CC1CEFE5B200515D06 /* LocationTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F871CB1CEFE5B200515D06 /* LocationTitle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		148DE8CA1CE2B6DC0021DF33 /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		148DE8CC1CE2C9BA0021DF33 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		148DE8CE1CE2E8500021DF33 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		14F871C91CEFDEDB00515D06 /* LocationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewController.swift; sourceTree = "<group>"; };
+		14F871CB1CEFE5B200515D06 /* LocationTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTitle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				1436A6121CE43AC100801591 /* CollectionViewController.swift */,
+				14F871C91CEFDEDB00515D06 /* LocationTableViewController.swift */,
 				1423C7C81CE5400400D5F1A1 /* CollectionViewCell.swift */,
 			);
 			name = CollectionViewGroup;
@@ -182,6 +187,7 @@
 				144EB10B1CE17BD700F9509F /* imageInfo.swift */,
 				148DE8CA1CE2B6DC0021DF33 /* Pin.swift */,
 				144EB10F1CE1949D00F9509F /* image.swift */,
+				14F871CB1CEFE5B200515D06 /* LocationTitle.swift */,
 				148DE8CC1CE2C9BA0021DF33 /* ImageCache.swift */,
 				144EB1071CE1740700F9509F /* Constants.swift */,
 			);
@@ -334,6 +340,7 @@
 			files = (
 				144EB0E51CE1301A00F9509F /* TestForPin.swift in Sources */,
 				148DE8CB1CE2B6DC0021DF33 /* Pin.swift in Sources */,
+				14F871CA1CEFDEDB00515D06 /* LocationTableViewController.swift in Sources */,
 				147DFD591CEBE57200F2946C /* TestVC1.swift in Sources */,
 				144EB10C1CE17BD700F9509F /* imageInfo.swift in Sources */,
 				147DFD5B1CEBE58100F2946C /* TestVC2.swift in Sources */,
@@ -343,6 +350,7 @@
 				148DE8CD1CE2C9BA0021DF33 /* ImageCache.swift in Sources */,
 				144EB0B51CE0E73A00F9509F /* AppDelegate.swift in Sources */,
 				144EB1081CE1740700F9509F /* Constants.swift in Sources */,
+				14F871CC1CEFE5B200515D06 /* LocationTitle.swift in Sources */,
 				1436A6131CE43AC100801591 /* CollectionViewController.swift in Sources */,
 				148DE8CF1CE2E8500021DF33 /* CoreDataStackManager.swift in Sources */,
 				144EB10E1CE192C800F9509F /* ImageDetailViewController.swift in Sources */,

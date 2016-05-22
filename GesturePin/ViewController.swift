@@ -15,13 +15,16 @@ class ViewController: UIViewController, MKMapViewDelegate {
     var latitude: Double = 0.0
     var longitude: Double = 0.0
     var pinPoints = [Pin]()
+    var pinPoint : Pin! = nil
     var placemark: MKPlacemark!
     
+    @IBOutlet weak var informationButton: UIBarButtonItem!
+    
+    @IBOutlet weak var NavigationBar: UINavigationItem!
     @IBOutlet weak var myMap: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         myMap.delegate = self
         pinPoints = fetchAllPins()
 //        restoreMapRegion(false)
@@ -45,83 +48,90 @@ class ViewController: UIViewController, MKMapViewDelegate {
             myMap.addAnnotation(annotation)
         }
 
-
-
-    }
-    
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        let reuseId = "pin"
-        
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView?.animatesDrop = true
-            pinView?.canShowCallout = true
-            pinView!.pinTintColor = .blueColor()
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-        }
-        else {
-            pinView!.annotation = annotation
-        }
-        return pinView
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         view.canShowCallout = true
 
-        if control == view.rightCalloutAccessoryView {
+        if control == view.leftCalloutAccessoryView {
+            self.latitude = view.annotation!.coordinate.latitude
+            self.longitude = view.annotation!.coordinate.longitude
 
-                    let controller = storyboard!.instantiateViewControllerWithIdentifier("CollectionViewController") as! CollectionViewController
-                    controller.latitude = view.annotation!.coordinate.latitude
-                    controller.longitude = view.annotation!.coordinate.longitude
+            self.performSegueWithIdentifier("ShowImage", sender: self)
+        }else if control == view.rightCalloutAccessoryView {
             
-                    for r in 0...self.pinPoints.count-1
-                    {
-                        if self.IRound(Double(self.pinPoints[r].latitude)) == self.IRound(view.annotation!.coordinate.latitude) && self.IRound(Double(self.pinPoints[r].longitude)) == self.IRound(view.annotation!.coordinate.longitude)
-                        {
-                            controller.pinPoint = self.pinPoints[r]
-            
-            
-                        }
+            for r in 0...self.pinPoints.count-1 {
+                
+                if self.IRound(Double(self.pinPoints[r].latitude)) == self.IRound(view.annotation!.coordinate.latitude) && self.IRound(Double(self.pinPoints[r].longitude)) == self.IRound(view.annotation!.coordinate.longitude) {
+                    self.sharedContext.deleteObject(pinPoints[r])
+                    self.saveContext()
+                    pinPoints.removeAtIndex(r)
+                }
             }
-            
-                    self.presentViewController(controller, animated: true,completion: nil)
-                    
+            myMap.removeAnnotation(view.annotation!)
         }
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowImage" {
+
+            let controller: CollectionViewController = segue.destinationViewController as! CollectionViewController
+            controller.latitude = self.latitude
+            controller.longitude = self.longitude
+            for r in 0...self.pinPoints.count-1
+            {
+            if self.IRound(Double(self.pinPoints[r].latitude)) == self.IRound(self.latitude) && self.IRound(Double(self.pinPoints[r].longitude)) == self.IRound(self.longitude)
+//                if self.pinPoints[r].latitude == self.latitude && self.pinPoints[r].longitude == self.longitude
+                {
+                    controller.pinPoint = self.pinPoints[r]
+        }
+            }
+        }else if segue.identifier == "PassData" {
+            let controller: CollectionViewController = segue.destinationViewController as! CollectionViewController
+            controller.latitude = self.latitude
+            controller.longitude = self.longitude
+            controller.pinPoint = self.pinPoint
+        }else if segue.identifier == "ShowLocation"  {
+            let LocationTableVC: LocationTableViewController = segue.destinationViewController as! LocationTableViewController
+            
+        }
+    
+    
+    
+    }
+    
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.imageList.removeAll()
     
-//        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//        appDelegate.imageList.removeAll()
-//        let controller = storyboard!.instantiateViewControllerWithIdentifier("CollectionViewController") as! CollectionViewController
-//        controller.latitude = view.annotation!.coordinate.latitude
-//        controller.longitude = view.annotation!.coordinate.longitude
-////        controller.pinPoint = self.pinPoints[0]
-//        
-//        performUIUpdatesOnMain(){
-//        for r in 0...self.pinPoints.count-1
-//        {
-//            if self.IRound(Double(self.pinPoints[r].latitude)) == self.IRound(view.annotation!.coordinate.latitude) && self.IRound(Double(self.pinPoints[r].longitude)) == self.IRound(view.annotation!.coordinate.longitude)
-//            {
-//                controller.pinPoint = self.pinPoints[r]
-//                
-//            
-//            }else {
-//                print("we are going to load new things")
-//            }
-//        }
-//        
-//        self.presentViewController(controller, animated: true,completion: nil)
-//        }
     }
+    
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         saveMapRegion()
     }
+    
+    @IBAction func HugeRefresh(sender: AnyObject) {
+        
+        let annotationsToRemove = myMap.annotations.filter{ $0 !== myMap.userLocation}
+        myMap.removeAnnotations(annotationsToRemove)
+        
+        if pinPoints.count > 0 {
+        for i in 0...pinPoints.count-1 {
+
+            self.sharedContext.deleteObject(pinPoints[i])
+            self.saveContext()
+        }
+            pinPoints.removeAll()
+        }
+    }
+    
+    @IBAction func GoForLocations(sender: AnyObject) {
+        
+    
+        self.performSegueWithIdentifier("ShowLocation", sender: self)
+    }
+    
+    
+    
     
     func action(gestureRecognizer:UIGestureRecognizer) {
         
@@ -148,16 +158,12 @@ class ViewController: UIViewController, MKMapViewDelegate {
                     ]
                     
                     let pin = Pin(dictionary: dictionary, context: self.sharedContext)
-                    
+                    self.latitude = newCoordinates.latitude
+                    self.longitude = newCoordinates.longitude
+                    self.pinPoint = pin
                     self.pinPoints.append(pin)
                     self.saveContext()
-                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("CollectionViewController") as! CollectionViewController
-                    controller.pinPoint = pin
-                    controller.latitude = newCoordinates.latitude
-                    controller.longitude = newCoordinates.longitude
-                    
-                    
-                    self.presentViewController(controller, animated: true, completion: nil)
+                    self.performSegueWithIdentifier("PassData", sender: self)
                 }
             })
         }
@@ -165,6 +171,37 @@ class ViewController: UIViewController, MKMapViewDelegate {
 //            let region = MKCoordinateRegionMakeWithDistance(newAnotation.coordinate, 1000, 1000)
 //            self.myMap.setRegion(region, animated: true)
         
+    }
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let reuseId = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        
+        let RunImage = UIImage(named: "run")
+        let RunButton = UIButton(type: .Custom)
+        RunButton.frame = CGRectMake(0, 0, 50, 50)
+        RunButton.setImage(RunImage, forState: .Normal)
+        
+        let DeleteImage = UIImage(named: "close-icon")
+        let DeleteButton = UIButton(type: .Custom)
+        DeleteButton.frame = CGRectMake(0, 0, 35, 35)
+        DeleteButton.setImage(DeleteImage, forState: .Normal)
+        
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView?.animatesDrop = true
+            pinView?.canShowCallout = true
+            pinView!.pinTintColor = .blueColor()
+            pinView!.rightCalloutAccessoryView = DeleteButton
+            pinView!.leftCalloutAccessoryView = RunButton
+        }
+        else {
+            pinView!.annotation = annotation
+        }
+        return pinView
     }
     
     func fetchAllPins() -> [Pin] {
@@ -195,8 +232,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
         var number = number
         number = Double(round(number*100000000)/100000000)
-        
-        
+
         return number
     }
     
@@ -226,8 +262,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     func restoreMapRegion(animated: Bool) {
         
-        // if we can unarchive a dictionary, we will use it to set the map back to its
-        // previous center and span
         if let regionDictionary = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as? [String : AnyObject] {
             
             let longitude = regionDictionary["longitude"] as! CLLocationDegrees

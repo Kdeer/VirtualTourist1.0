@@ -12,20 +12,22 @@ import UIKit
 
 class TestVC1: UIViewController {
     
-    var JustANumber: Int = 0
+        var JustANumber: Int = 0
     
+    @IBOutlet weak var goT2: UIButton!
     
     
     override func viewDidLoad() {
-        print(JustANumber)
+
     }
     
     
     @IBAction func GoT2(sender: AnyObject) {
-        
-       let controller = storyboard!.instantiateViewControllerWithIdentifier("TestVC2") as! TestVC2
-        
-    self.presentViewController(controller, animated: false, completion: nil)
+        print(JustANumber)
+        self.goT2.enabled = true
+//       let controller = storyboard!.instantiateViewControllerWithIdentifier("TestVC2") as! TestVC2
+//        
+//    self.navigationController!.pushViewController(controller, animated: true)
 
 
     }

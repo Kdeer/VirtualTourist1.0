@@ -14,10 +14,17 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var editingButton: UIBarButtonItem!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var editingButton: UIBarButtonItem!
+    @IBOutlet weak var TeamStack: UIStackView!
+    @IBOutlet weak var freshButton: UIBarButtonItem!
     
-    var destinyNumber: Int = 0
+    
+    var imageLists: [image] {
+        return (UIApplication.sharedApplication().delegate as! AppDelegate).imageList
+    }
+    
+    var destinyNumber: Int = 1
     var destinyCellNumber: Int = 1
     var cellHeight: Int = 0
     var cellWidth: Int = 0
@@ -28,15 +35,11 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var latitude: Double = 0.0
     var longitude: Double = 0.0
     
-    var imageList: [image] {
-        return (UIApplication.sharedApplication().delegate as! AppDelegate).imageList
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        appDelegate.imageList.removeAll()
         collectionView.delegate = self
         collectionView.dataSource = self
-        
         
         let mapSpan = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
         let mapCenter = CLLocationCoordinate2DMake((pinPoint?.latitude.doubleValue)!, (pinPoint?.longitude.doubleValue)!)
@@ -49,78 +52,109 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        print(self.pinPoint1)
         if pinPoint.imageinfos.isEmpty {
-            
-            VirtualTouristClient.sharedInstance().imagesAtLocation(self.latitude, longitude: self.longitude){(success, result, error) in
-                
-                if success {
-                    if let imageDictionary = result.valueForKey("photo") as? [[String:AnyObject]] {
-                        
-                        _ = imageDictionary.map(){(dictionary: [String:AnyObject]) -> ImageInfo in
-                            let imageList1 = ImageInfo(dictionary: dictionary, context: self.sharedContext)
-                            
-                            imageList1.pinPoint = self.pinPoint
-
-//                            print(self.pinPoint.imageinfos)
-                            return imageList1
-                        }
-                        
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.collectionView!.reloadData()
-                            
-                        }
-                       self.saveContext()
-                    }
-                }
-            }
-            
+            self.getMeImages()
         }
+
     }
 
     @IBAction func TestButton(sender: AnyObject) {
-        
-        
-//        let controller = storyboard!.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
-//        
-//        self.presentViewController(controller, animated: true, completion: nil)
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-//    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-//        return 1
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowLocation"  {
+            
+            let LocationTableVC: LocationTableViewController = segue.destinationViewController as! LocationTableViewController
+            
+        } else if segue.identifier == "DetailImage"{
+            let path = collectionView.indexPathsForSelectedItems()
+            let selectedPath = path?.first
+            
+            let ImageDetailVC: ImageDetailViewController = segue.destinationViewController as! ImageDetailViewController
+            ImageDetailVC.DetailedImage = imageLists[(selectedPath?.row)!]
+        }
+    }
+    
+    @IBAction func ButtonUp(sender: AnyObject) {
+        if self.destinyCellNumber == 1{
+            self.destinyCellNumber = 0
+            self.collectionView.center.y = self.collectionView.center.y - self.mapView.center.y
+            self.TeamStack.center.y = self.TeamStack.center.y - self.mapView.center.y
+            self.mapView.hidden = true
+        }else{
+            self.collectionView.center.y = self.collectionView.center.y + self.mapView.center.y
+            self.TeamStack.center.y = self.TeamStack.center.y + self.mapView.center.y
+            self.destinyCellNumber = 1
+            self.mapView.hidden = false
+        }
+        self.collectionView!.reloadData()
+    }
+    
+    
+    @IBAction func FreshButton(sender: AnyObject) {
+        self.freshButton.enabled = false
+        if self.pinPoint.imageinfos.count > 25 {
+        for item in self.collectionView!.visibleCells() as![CollectionViewCell] {
+        let indexPath : NSIndexPath = self.collectionView!.indexPathForCell(item as CollectionViewCell)!
+            let imageCollection = pinPoint.imageinfos[indexPath.row]
+            imageCollection.pinPoint = nil
+            self.sharedContext.deleteObject(imageCollection)
+            self.saveContext()
+            }
+
+        }else if self.pinPoint.imageinfos.isEmpty {
+            self.getMeImages()
+        }
+        self.collectionView!.reloadData()
+        self.freshButton.enabled = true
+    }
+    
+    
+
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        var MinColumns : Int = 0
+        if self.destinyCellNumber == 0 {
+            MinColumns = 15
+        }else {
+            MinColumns = 12
+        }
         
-//        return min(pinPoint.imageinfos.count, 15)
-        return pinPoint.imageinfos.count
+        return min(pinPoint.imageinfos.count, MinColumns)
+//        return pinPoint.imageinfos.count
 //        return 5
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCell
-
-
+        cell.Adicator.hidden = false
+        cell.Adicator.startAnimating()
         let imageRow = pinPoint.imageinfos[indexPath.row]
-        var posterImage = UIImage(named: "8188165_l")
+        var posterImage = UIImage()
         cell.imageView.contentMode = .ScaleAspectFill
         if imageRow.imageURL == nil || imageRow.imageURL == "" {
-            posterImage = UIImage(named: "8188165_l")
+            posterImage = UIImage()
         }else if imageRow.posterImage != nil {
-
-            posterImage = imageRow.posterImage
-        } else {
+            posterImage = imageRow.posterImage!
+            appDelegate.imageList.append(image(imageFromLocation: imageRow.posterImage!))
             
+            cell.Adicator.stopAnimating()
+            cell.Adicator.hidden = true
+        } else {
+
             let task = VirtualTouristClient.sharedInstance().taskForImages(imageRow.imageURL)
             {(imageData, error) in
                 
                 if let data = imageData {
                     let image1 = UIImage(data:data)
                     imageRow.posterImage = image1
-                
+
+
                 performUIUpdatesOnMain(){
                     cell.imageView.image = image1
+                    cell.Adicator.stopAnimating()
+                    cell.Adicator.hidden = true
+                    appDelegate.imageList.append(image(imageFromLocation: image1))
                     }
                 }
             }
@@ -130,27 +164,13 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         cell.closingImage.addTarget(self, action: #selector(self.deletePhoto(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         cell.closingImage.hidden = true
         cell.imageView.image = posterImage
+
         return cell
     }
     
     func deletePhoto(sender: UIButton) {
         let i : Int = (sender.layer.valueForKey("index")) as! Int
         print("anti\(i)")
-        
-//        self.pinPoint1.removeAtIndex(i)
-        
- 
-            
-            
-            
-//            for i in 0...paths.count-1 {
-//            print(Int(paths[i].row))
-//            for i in 0...paths.count{
-//            let selectedPath = paths[i]
-//                print(selectedPath)
-//        let imageCollection = self.pinPoint.imageinfos[selectedPath.row]
-//            self.pinPoint1.removeAtIndex(selectedPath.row)
-            
 
         self.collectionView!.reloadData()
     }
@@ -171,12 +191,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 }
             }
         self.collectionView!.reloadData()
-        
+        }
     }
-    }
-    
-
-    
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         collectionView.allowsMultipleSelection = true
@@ -186,49 +202,25 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             cell.closingImage.hidden = false
 //        cell.imageView.alpha = 0.5
         let imageCollection = self.pinPoint.imageinfos[indexPath.row]
-            
-//            if Int(indexPath.row) == 0{
-//                self.pinPoint1.insert(imageCollection, atIndex: Int(indexPath.row))
-//            }else{
-//        self.pinPoint1.insert(imageCollection, atIndex: Int(indexPath.row))
-//                print("indexPath\(Int(indexPath.row))")
-//                print(pinPoint1)
-        }else{
+            self.pinPoint1.append(imageCollection)
+        }else if editingButton.title == "Edit"{
+            let controller = storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController") as! ImageDetailViewController
+            controller.DetailedImage = imageLists[indexPath.row]
+            print(appDelegate.imageList[indexPath.row],imageLists[indexPath.row])
+            self.navigationController!.pushViewController(controller, animated: true)
+        }
+        else{
             cell.closingImage.hidden = true
         }
     }
-    
-//    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-//        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! CollectionViewCell
-//        cell.selected = false
-//        if editingButton.title == "Done"{
-//            print("456")
-//            cell.closingImage.viewWithTag(102)
-//            cell.closingImage.hidden = true
-//            cell.imageView.alpha = 1
-//            self.pinPoint1.removeLast()
-//            cell.selected = false
-//        }
-//    }
-    
-    
-//    func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath) {
-//        
-//    }
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-    
 
-    
+
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
         flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         flowLayout.minimumInteritemSpacing = 0
 
-        
-        if self.destinyNumber == 0{
+        if self.destinyNumber == 1{
             self.cellWidth = 124
             self.cellHeight = 118
             flowLayout.minimumLineSpacing = 1
@@ -253,6 +245,37 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         self.collectionView.reloadData()
     }
     
+    func getMeImages() {
+
+            VirtualTouristClient.sharedInstance().imagesAtLocation(self.latitude, longitude: self.longitude){(success, result, error) in
+                if success {
+                    if let imageDictionary = result.valueForKey("photo") as? [[String:AnyObject]] {
+                        
+                        _ = imageDictionary.map(){(dictionary: [String:AnyObject]) -> ImageInfo in
+                            let imageList1 = ImageInfo(dictionary: dictionary, context: self.sharedContext)
+                            
+                            imageList1.pinPoint = self.pinPoint
+                            
+                            //                            print(self.pinPoint.imageinfos)
+                            return imageList1
+                        }
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.collectionView!.reloadData()
+                            
+                        }
+                        self.saveContext()
+                    }
+                }else if result == nil{
+                    print("Here is no photos")
+                }
+            }
+    }
+    
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
+    
     lazy var sharedContext: NSManagedObjectContext =  {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
@@ -261,6 +284,25 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         CoreDataStackManager.sharedInstance().saveContext()
     }
 }
+
+
+//    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+//        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! CollectionViewCell
+//        cell.selected = false
+//        if editingButton.title == "Done"{
+//            print("456")
+//            cell.closingImage.viewWithTag(102)
+//            cell.closingImage.hidden = true
+//            cell.imageView.alpha = 1
+//            self.pinPoint1.removeLast()
+//            cell.selected = false
+//        }
+//    }
+
+
+//    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+//        return 1
+//    }
 
 //        if let paths = collectionView.indexPathsForSelectedItems()
 

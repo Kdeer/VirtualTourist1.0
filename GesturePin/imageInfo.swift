@@ -33,7 +33,7 @@ class ImageInfo: NSManagedObject {
         // work of "inserting" our object into the context that was passed in as a parameter
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     
-        imageURL = dictionary["url_m"] as! String
+        imageURL = dictionary["url_m"] as? String
 //        title = dictionary["title"] as? String
         
     }

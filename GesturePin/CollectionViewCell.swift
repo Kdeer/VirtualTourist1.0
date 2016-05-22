@@ -15,6 +15,9 @@ class CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var closingImage: UIButton!
     
+    @IBOutlet weak var Adicator: UIActivityIndicatorView!
+    
+    
     var taskToCancelifCellIsReused: NSURLSessionTask? {
         
         didSet {
