@@ -10,8 +10,8 @@ import UIKit
 
 class ImageCache {
     
-    private var inMemoryCache = NSCache()
-    
+    var inMemoryCache = NSCache()
+
     // MARK: - Retreiving images
     
     func imageWithIdentifier(identifier: String?) -> UIImage? {
@@ -42,9 +42,8 @@ class ImageCache {
         let path = pathForIdentifier(identifier)
         
         // If the image is nil, remove images from the cache
-        if image == nil {
+        if image == nil{
             inMemoryCache.removeObjectForKey(path)
-            
             do {
                 try NSFileManager.defaultManager().removeItemAtPath(path)
             } catch _ {}
@@ -70,6 +69,12 @@ class ImageCache {
         
     }
     
+    class func sharedInstance() -> ImageCache {
+        struct Singleton {
+            static var sharedInstance = ImageCache()
+        }
+        return Singleton.sharedInstance
+    }
     
     
     

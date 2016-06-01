@@ -10,12 +10,17 @@ import Foundation
 import UIKit
 import CoreData
 
+protocol CacheDelegate {
+    func cacheNotification(didFinishNumber: Int)
+}
+
 class ImageInfo: NSManagedObject {
     
     
     @NSManaged var imageURL: String!
     @NSManaged var pinPoint: Pin?
-//    var title: String?
+    
+    var delegate : CacheDelegate?
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -34,7 +39,6 @@ class ImageInfo: NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     
         imageURL = dictionary["url_m"] as? String
-//        title = dictionary["title"] as? String
         
     }
     
@@ -43,7 +47,12 @@ class ImageInfo: NSManagedObject {
             return VirtualTouristClient.Caches.imageCache.imageWithIdentifier(imageURL)
         }
         set {
+            if cacheDestinyNumber == 0 {
             VirtualTouristClient.Caches.imageCache.storeImage(newValue, withIdentifier: imageURL!)
+            }else {
+                print(cacheDestinyNumber)
+            }
+
         }
     }
     

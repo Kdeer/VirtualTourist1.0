@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14138D341CF678930049A266 /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14138D331CF678930049A266 /* LocationSearchViewController.swift */; };
+		14138D361CF67AA90049A266 /* VCExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14138D351CF67AA90049A266 /* VCExtensions.swift */; };
 		1423C7C91CE5400400D5F1A1 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1423C7C81CE5400400D5F1A1 /* CollectionViewCell.swift */; };
 		1436A5D41CE3E18900801591 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1436A5D21CE3E18900801591 /* Model.xcdatamodeld */; };
 		1436A6131CE43AC100801591 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1436A6121CE43AC100801591 /* CollectionViewController.swift */; };
@@ -26,10 +28,11 @@
 		144EB10E1CE192C800F9509F /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EB10D1CE192C800F9509F /* ImageDetailViewController.swift */; };
 		144EB1101CE1949D00F9509F /* image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EB10F1CE1949D00F9509F /* image.swift */; };
 		147DFD591CEBE57200F2946C /* TestVC1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147DFD581CEBE57200F2946C /* TestVC1.swift */; };
-		147DFD5B1CEBE58100F2946C /* TestVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147DFD5A1CEBE58100F2946C /* TestVC2.swift */; };
+		147DFD5B1CEBE58100F2946C /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147DFD5A1CEBE58100F2946C /* LocationSearchTable.swift */; };
 		148DE8CB1CE2B6DC0021DF33 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DE8CA1CE2B6DC0021DF33 /* Pin.swift */; };
 		148DE8CD1CE2C9BA0021DF33 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DE8CC1CE2C9BA0021DF33 /* ImageCache.swift */; };
 		148DE8CF1CE2E8500021DF33 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DE8CE1CE2E8500021DF33 /* CoreDataStackManager.swift */; };
+		1491883B1CF20A400003175B /* TestForSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1491883A1CF20A400003175B /* TestForSearch.swift */; };
 		14F871CA1CEFDEDB00515D06 /* LocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F871C91CEFDEDB00515D06 /* LocationTableViewController.swift */; };
 		14F871CC1CEFE5B200515D06 /* LocationTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F871CB1CEFE5B200515D06 /* LocationTitle.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +55,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14138D331CF678930049A266 /* LocationSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
+		14138D351CF67AA90049A266 /* VCExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCExtensions.swift; sourceTree = "<group>"; };
 		1423C7C81CE5400400D5F1A1 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		1436A5D31CE3E18900801591 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		1436A6121CE43AC100801591 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
@@ -77,10 +82,11 @@
 		144EB10D1CE192C800F9509F /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		144EB10F1CE1949D00F9509F /* image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = image.swift; sourceTree = "<group>"; };
 		147DFD581CEBE57200F2946C /* TestVC1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC1.swift; sourceTree = "<group>"; };
-		147DFD5A1CEBE58100F2946C /* TestVC2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC2.swift; sourceTree = "<group>"; };
+		147DFD5A1CEBE58100F2946C /* LocationSearchTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
 		148DE8CA1CE2B6DC0021DF33 /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		148DE8CC1CE2C9BA0021DF33 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		148DE8CE1CE2E8500021DF33 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		1491883A1CF20A400003175B /* TestForSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestForSearch.swift; sourceTree = "<group>"; };
 		14F871C91CEFDEDB00515D06 /* LocationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewController.swift; sourceTree = "<group>"; };
 		14F871CB1CEFE5B200515D06 /* LocationTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTitle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,8 +121,8 @@
 			isa = PBXGroup;
 			children = (
 				1436A6121CE43AC100801591 /* CollectionViewController.swift */,
-				14F871C91CEFDEDB00515D06 /* LocationTableViewController.swift */,
 				1423C7C81CE5400400D5F1A1 /* CollectionViewCell.swift */,
+				14F871C91CEFDEDB00515D06 /* LocationTableViewController.swift */,
 			);
 			name = CollectionViewGroup;
 			sourceTree = "<group>";
@@ -151,9 +157,11 @@
 				144EB0B41CE0E73A00F9509F /* AppDelegate.swift */,
 				1436A5D21CE3E18900801591 /* Model.xcdatamodeld */,
 				144EB0B61CE0E73A00F9509F /* ViewController.swift */,
+				14138D331CF678930049A266 /* LocationSearchViewController.swift */,
+				14138D351CF67AA90049A266 /* VCExtensions.swift */,
+				144EB0B81CE0E73A00F9509F /* Main.storyboard */,
 				1423C7C71CE53FDD00D5F1A1 /* CollectionViewGroup */,
 				144EB0E81CE1648400F9509F /* VTClients */,
-				144EB0B81CE0E73A00F9509F /* Main.storyboard */,
 				147DFD5C1CEBE5C700F2946C /* Test */,
 				144EB0BB1CE0E73A00F9509F /* Assets.xcassets */,
 				144EB0BD1CE0E73A00F9509F /* LaunchScreen.storyboard */,
@@ -197,9 +205,10 @@
 		147DFD5C1CEBE5C700F2946C /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				1491883A1CF20A400003175B /* TestForSearch.swift */,
 				144EB0E41CE1301A00F9509F /* TestForPin.swift */,
 				147DFD581CEBE57200F2946C /* TestVC1.swift */,
-				147DFD5A1CEBE58100F2946C /* TestVC2.swift */,
+				147DFD5A1CEBE58100F2946C /* LocationSearchTable.swift */,
 			);
 			name = Test;
 			sourceTree = "<group>";
@@ -343,16 +352,19 @@
 				14F871CA1CEFDEDB00515D06 /* LocationTableViewController.swift in Sources */,
 				147DFD591CEBE57200F2946C /* TestVC1.swift in Sources */,
 				144EB10C1CE17BD700F9509F /* imageInfo.swift in Sources */,
-				147DFD5B1CEBE58100F2946C /* TestVC2.swift in Sources */,
+				147DFD5B1CEBE58100F2946C /* LocationSearchTable.swift in Sources */,
 				1436A5D41CE3E18900801591 /* Model.xcdatamodeld in Sources */,
 				144EB0EC1CE1660F00F9509F /* VirtualTouristClient.swift in Sources */,
 				144EB0B71CE0E73A00F9509F /* ViewController.swift in Sources */,
 				148DE8CD1CE2C9BA0021DF33 /* ImageCache.swift in Sources */,
 				144EB0B51CE0E73A00F9509F /* AppDelegate.swift in Sources */,
+				1491883B1CF20A400003175B /* TestForSearch.swift in Sources */,
 				144EB1081CE1740700F9509F /* Constants.swift in Sources */,
 				14F871CC1CEFE5B200515D06 /* LocationTitle.swift in Sources */,
 				1436A6131CE43AC100801591 /* CollectionViewController.swift in Sources */,
 				148DE8CF1CE2E8500021DF33 /* CoreDataStackManager.swift in Sources */,
+				14138D361CF67AA90049A266 /* VCExtensions.swift in Sources */,
+				14138D341CF678930049A266 /* LocationSearchViewController.swift in Sources */,
 				144EB10E1CE192C800F9509F /* ImageDetailViewController.swift in Sources */,
 				144EB10A1CE17A0000F9509F /* GCDBlackBox.swift in Sources */,
 				1423C7C91CE5400400D5F1A1 /* CollectionViewCell.swift in Sources */,

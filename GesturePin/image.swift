@@ -14,3 +14,8 @@ struct image {
     var imageFromLocation: UIImage!
     
 }
+
+
+struct FriendItem {
+    let name: String
+}

@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "run.png",
+      "filename" : "3d34ed_none.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "3d34ed_none-2.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "3d34ed_none-3.png",
       "scale" : "3x"
     }
   ],

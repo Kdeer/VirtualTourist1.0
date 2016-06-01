@@ -14,6 +14,7 @@ import CoreData
 class LocationTableViewController: UITableViewController {
     
     var pinPoints = [Pin]()
+    var pinPointsR = [Pin]()
     var LocationTitles = [LocationTitle]()
     var imageInfos: ImageInfo!
     var pinPoint : Pin! = nil
@@ -24,7 +25,7 @@ class LocationTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         pinPoints = fetchAllPins()
-        
+        self.pinPointsR = pinPoints.reverse()
         
         print(pinPoints)
     }
@@ -38,7 +39,7 @@ class LocationTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell", forIndexPath: indexPath) as UITableViewCell!
-        let locations = pinPoints[indexPath.row]
+        let locations = pinPointsR[indexPath.row]
         
         cell.textLabel!.text = locations.title!
         
@@ -46,7 +47,7 @@ class LocationTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let locations = pinPoints[indexPath.row]
+        let locations = pinPointsR[indexPath.row]
         self.pinPoint = locations
         self.performSegueWithIdentifier("ShowImage", sender: self)
         

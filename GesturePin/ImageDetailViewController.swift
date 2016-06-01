@@ -19,15 +19,10 @@ class ImageDetailViewController: UIViewController {
     
     
     var DetailedImage : image!
-
-    
-    var imageS = UIImage()
-
     
     override func viewWillAppear(animated: Bool) {
+
         self.imageView.image = DetailedImage.imageFromLocation
-//        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//        appDelegate.imageList.removeAll()
     }
     
     @IBAction func Dismiss(sender: AnyObject) {

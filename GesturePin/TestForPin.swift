@@ -18,6 +18,9 @@ class TestForPin: UIViewController, MKMapViewDelegate{
     
     var annotations : [MKPointAnnotation] = [MKPointAnnotation]()
     var placemark: MKPlacemark!
+    
+    
+    
 
     
     override func viewDidLoad() {
