@@ -19,6 +19,4 @@ struct LocationTitle {
         titles = dictionary["titles"]! as String
         
     }
-    
-    
 }

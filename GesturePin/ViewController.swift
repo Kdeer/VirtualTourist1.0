@@ -10,6 +10,8 @@ import UIKit
 import MapKit
 import CoreData
 
+var globalID: [String] = []
+
 class ViewController: UIViewController, GetLocation{
     
     var latitude: Double = 0.0
@@ -17,33 +19,26 @@ class ViewController: UIViewController, GetLocation{
     var pinPoints = [Pin]()
     var pinPoint : Pin! = nil
     var placemark: MKPlacemark!
-    var locationManager = CLLocationManager()
-    
+    var pinTitle: String? = nil
     
     @IBOutlet weak var informationButton: UIBarButtonItem!
     @IBOutlet weak var NavigationBar: UINavigationItem!
     @IBOutlet weak var myMap: MKMapView!
     @IBOutlet weak var goSatellite: UIBarButtonItem!
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         pinPoints = fetchAllPins()
-//        restoreMapRegion(false)
-        
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
+        restoreMapRegion(false)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.action(_:)))
         longPress.minimumPressDuration = 0.8
         myMap.addGestureRecognizer(longPress)
     }
     
-
-    
+    deinit {
+        LocationTableViewController().resultSearchController?.view.removeFromSuperview()
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -57,26 +52,30 @@ class ViewController: UIViewController, GetLocation{
             annotation.title = locationAnyObject.title
             myMap.addAnnotation(annotation)
         }
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowImage" {
 
             let controller: CollectionViewController = segue.destinationViewController as! CollectionViewController
-            controller.latitude = self.latitude
-            controller.longitude = self.longitude
-            for r in 0...self.pinPoints.count-1
+            controller.latitude = latitude
+            controller.longitude = longitude
+
+            for r in 0...pinPoints.count-1
             {
-            if self.IRound(Double(self.pinPoints[r].latitude)) == self.IRound(self.latitude) && self.IRound(Double(self.pinPoints[r].longitude)) == self.IRound(self.longitude)
+            if self.IRound(Double(pinPoints[r].latitude)) == IRound(latitude) && IRound(Double(pinPoints[r].longitude)) == IRound(longitude)
                 {
-                    controller.pinPoint = self.pinPoints[r]
+                    controller.pinPoint = pinPoints[r]
+                    controller.pinTitle = pinTitle
                 }
             }
         }else if segue.identifier == "PassData"{
             let controller: CollectionViewController = segue.destinationViewController as! CollectionViewController
-            controller.latitude = self.latitude
-            controller.longitude = self.longitude
-            controller.pinPoint = self.pinPoint
+            controller.latitude = latitude
+            controller.longitude = longitude
+            controller.pinPoint = pinPoint
+            controller.pinTitle = pinTitle
         }else if segue.identifier == "ShowLocation"  {
             let LocationTableVC: LocationTableViewController = segue.destinationViewController as! LocationTableViewController
         }else if segue.identifier == "ShowAddress" {
@@ -102,14 +101,13 @@ class ViewController: UIViewController, GetLocation{
             "longitude" : placemark.coordinate.longitude,
             "title" : self.placemark.title!
         ]
-        
+        pinTitle = self.placemark.title!
         let pin = Pin(dictionary: dictionary, context: self.sharedContext)
-        self.latitude = placemark.coordinate.latitude
-        self.longitude = placemark.coordinate.longitude
-        self.pinPoint = pin
-        self.pinPoints.append(pin)
-        self.saveContext()
-        
+        latitude = placemark.coordinate.latitude
+        longitude = placemark.coordinate.longitude
+        pinPoint = pin
+        pinPoints.append(pin)
+        saveContext()
         
         myMap.addAnnotation(annotation)
         let span = MKCoordinateSpanMake(0.05, 0.05)
@@ -138,6 +136,7 @@ class ViewController: UIViewController, GetLocation{
                         "longitude" : newCoordinates.longitude,
                         "title" : self.placemark.title!
                     ]
+                    self.pinTitle = self.placemark.title!
                     
                     let pin = Pin(dictionary: dictionary, context: self.sharedContext)
                     self.latitude = newCoordinates.latitude
@@ -156,24 +155,67 @@ class ViewController: UIViewController, GetLocation{
         let controller = storyboard!.instantiateViewControllerWithIdentifier("LocationSearchViewController") as! LocationSearchViewController
         controller.delegate = self
         
-        presentViewController(controller, animated: true, completion: nil)
+        self.presentViewController(controller, animated: false, completion: nil)
         
     }
     
-    
     @IBAction func HugeRefresh(sender: AnyObject) {
         
-        let annotationsToRemove = myMap.annotations.filter{ $0 !== myMap.userLocation}
-        myMap.removeAnnotations(annotationsToRemove)
         
-        if pinPoints.count > 0 {
-            for i in 0...pinPoints.count-1 {
+        print(pinPoints)
+        let alertController = UIAlertController(title: "Alert", message: "Sure to delete all you pins?", preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "Yes", style: .Default){
+            (action) in
+            
+            let annotationsToRemove = self.myMap.annotations.filter{ $0 !== self.myMap.userLocation}
+            self.myMap.removeAnnotations(annotationsToRemove)
+        
+            if self.pinPoints.count > 0 {
                 
-                self.sharedContext.deleteObject(pinPoints[i])
+                for i in 0...self.pinPoints.count - 1 {
+                    if self.pinPoints[i].imageinfos.isEmpty {
+                        self.sharedContext.deleteObject(self.pinPoints[i])
+                    }else {
+                    for m in 0...self.pinPoints[i].imageinfos.count-1 {
+                        let path = self.pathForIdentifier(self.pinPoints[i].imageinfos[m].id)
+                        do {
+                            try NSFileManager.defaultManager().removeItemAtPath(path)
+                        }catch _{}
+                    }
+                }
+                }
+                
+                for i in 0...self.pinPoints.count-1 {
+                    
+                    self.sharedContext.deleteObject(self.pinPoints[i])
+                    self.saveContext()
+                }
+
+            }else {
+                
+                for m in 0...self.pinPoints[0].imageinfos.count-1 {
+                    let path = self.pathForIdentifier(self.pinPoints[0].imageinfos[m].id)
+                    do {
+                        try NSFileManager.defaultManager().removeItemAtPath(path)
+                    }catch _{}
+                }
+                
+                self.sharedContext.deleteObject(self.pinPoints[0])
                 self.saveContext()
             }
-            pinPoints.removeAll()
+                self.pinPoints.removeAll()
+
+//            print(self.pinPoints[0].imageinfos)
         }
+        
+        alertController.addAction(OKAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+
     }
     
     @IBAction func GoForLocations(sender: AnyObject) {
@@ -182,16 +224,15 @@ class ViewController: UIViewController, GetLocation{
     }
     
     @IBAction func GoSatellite(sender: AnyObject) {
-        if self.myMap.mapType == .Satellite {
-            self.myMap.mapType = .Standard
+        if myMap.mapType == .Satellite {
+            myMap.mapType = .Standard
             goSatellite.tintColor = nil
         }else {
-            self.myMap.mapType = .Satellite
+            myMap.mapType = .Satellite
             goSatellite.tintColor = UIColor.blueColor()
         }
         
     }
-    
     
     func fetchAllPins() -> [Pin] {
         
@@ -219,11 +260,10 @@ class ViewController: UIViewController, GetLocation{
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first! as NSURL
         return url.URLByAppendingPathComponent("mapRegionArchive").path!
     }
-
+    
+    func pathForIdentifier(identifier: String) -> String {
+        let documentsDirectoryURL: NSURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
+        let fullURL = documentsDirectoryURL.URLByAppendingPathComponent(identifier)
+        return fullURL.path!
+    }
 }
-
-//extension String {
-//    func toDouble() -> Double? {
-//        return NSNumberFormatter().numberFromString(self)?.doubleValue
-//    }
-//}

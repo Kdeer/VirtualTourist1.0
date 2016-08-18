@@ -11,32 +11,9 @@ import MapKit
 
 
 
-extension ViewController: CLLocationManagerDelegate{
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedWhenInUse {
-            locationManager.requestLocation()
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            let span = MKCoordinateSpanMake(100, 100)
-            let region = MKCoordinateRegion(center: location.coordinate, span: span)
-            myMap.setRegion(region, animated: true)
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print(error)
-    }
-
+extension ViewController{
     
     func saveMapRegion() {
-        
-        // Place the "center" and "span" of the map into a dictionary
-        // The "span" is the width and height of the map in degrees.
-        // It represents the zoom level of the map.
         
         let dictionary = [
             "latitude" : myMap.region.center.latitude,
@@ -45,7 +22,6 @@ extension ViewController: CLLocationManagerDelegate{
             "longitudeDelta" : myMap.region.span.longitudeDelta
         ]
         
-        // Archive the dictionary into the filePath
         NSKeyedArchiver.archiveRootObject(dictionary, toFile: filePath)
     }
     
@@ -84,18 +60,28 @@ extension ViewController: MKMapViewDelegate {
         view.canShowCallout = true
  
         if control == view.rightCalloutAccessoryView {
-            self.latitude = view.annotation!.coordinate.latitude
-            self.longitude = view.annotation!.coordinate.longitude
+            latitude = view.annotation!.coordinate.latitude
+            longitude = view.annotation!.coordinate.longitude
+            pinTitle = view.annotation!.title!
             self.performSegueWithIdentifier("ShowImage", sender: self)
-            
+
         }else if control == view.leftCalloutAccessoryView {
             
-            for r in 0...self.pinPoints.count-1 {
+            for r in 0...pinPoints.count-1 {
                 
-                if self.IRound(Double(self.pinPoints[r].latitude)) == self.IRound(view.annotation!.coordinate.latitude) && self.IRound(Double(self.pinPoints[r].longitude)) == self.IRound(view.annotation!.coordinate.longitude) {
-                    self.sharedContext.deleteObject(pinPoints[r])
-                    self.saveContext()
+                if IRound(Double(pinPoints[r].latitude)) == IRound(view.annotation!.coordinate.latitude) && IRound(Double(pinPoints[r].longitude)) == IRound(view.annotation!.coordinate.longitude) {
+                    if !self.pinPoints[r].imageinfos.isEmpty{
+                    for m in 0...pinPoints[r].imageinfos.count - 1 {
+                        let path = self.pathForIdentifier(self.pinPoints[r].imageinfos[m].id)
+                        do {
+                            try NSFileManager.defaultManager().removeItemAtPath(path)
+                        }catch _{}
+                        }
+                    }
+                    sharedContext.deleteObject(pinPoints[r])
                     pinPoints.removeAtIndex(r)
+                    saveContext()
+                    
                 }
             }
             myMap.removeAnnotation(view.annotation!)
@@ -139,13 +125,4 @@ extension ViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         saveMapRegion()
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

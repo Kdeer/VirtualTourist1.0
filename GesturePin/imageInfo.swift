@@ -10,17 +10,12 @@ import Foundation
 import UIKit
 import CoreData
 
-protocol CacheDelegate {
-    func cacheNotification(didFinishNumber: Int)
-}
 
 class ImageInfo: NSManagedObject {
     
-    
     @NSManaged var imageURL: String!
+    @NSManaged var id: String!
     @NSManaged var pinPoint: Pin?
-    
-    var delegate : CacheDelegate?
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -28,31 +23,21 @@ class ImageInfo: NSManagedObject {
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
-        // Get the entity associated with the "Person" type.  This is an object that contains
-        // the information from the Model.xcdatamodeld file. We will talk about this file in
-        // Lesson 4.
         let entity =  NSEntityDescription.entityForName("ImageInfo", inManagedObjectContext: context)!
         
-        // Now we can call an init method that we have inherited from NSManagedObject. Remember that
-        // the Person class is a subclass of NSManagedObject. This inherited init method does the
-        // work of "inserting" our object into the context that was passed in as a parameter
         super.init(entity: entity, insertIntoManagedObjectContext: context)
-    
+        
+        id = dictionary["id"] as? String
         imageURL = dictionary["url_m"] as? String
         
     }
     
     var posterImage: UIImage? {
         get {
-            return VirtualTouristClient.Caches.imageCache.imageWithIdentifier(imageURL)
+            return VirtualTouristClient.Caches.imageCache.imageWithIdentifier(id)
         }
         set {
-            if cacheDestinyNumber == 0 {
-            VirtualTouristClient.Caches.imageCache.storeImage(newValue, withIdentifier: imageURL!)
-            }else {
-                print(cacheDestinyNumber)
-            }
-
+        VirtualTouristClient.Caches.imageCache.storeImage(newValue, withIdentifier: id)
         }
     }
     

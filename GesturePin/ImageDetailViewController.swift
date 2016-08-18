@@ -11,13 +11,7 @@ import UIKit
 class ImageDetailViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
-    
 
-    var imageLists: [image] {
-        return (UIApplication.sharedApplication().delegate as! AppDelegate).imageList
-    }
-    
-    
     var DetailedImage : image!
     
     override func viewWillAppear(animated: Bool) {
@@ -28,9 +22,4 @@ class ImageDetailViewController: UIViewController {
     @IBAction func Dismiss(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-
-    
-    
-
-
 }

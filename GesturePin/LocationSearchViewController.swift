@@ -20,7 +20,13 @@ class LocationSearchViewController: UIViewController, UISearchResultsUpdating {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var resultSearchController: UISearchController? = nil
+    
+    //eliminate the bug
+    deinit {
+        self.resultSearchController?.view.removeFromSuperview()
+    }
+    
+    var resultSearchController : UISearchController!
     var matchingItems: [MKMapItem] = []
     var delegate: GetLocation?
     
@@ -33,11 +39,16 @@ class LocationSearchViewController: UIViewController, UISearchResultsUpdating {
         super.viewDidLoad()
         
         resultSearchController = UISearchController(searchResultsController: nil)
-        resultSearchController?.searchResultsUpdater = self
-        resultSearchController?.dimsBackgroundDuringPresentation = false
-        resultSearchController?.searchBar.sizeToFit()
-        tableView.tableHeaderView = self.resultSearchController?.searchBar
+        resultSearchController.searchResultsUpdater = self
+        resultSearchController.dimsBackgroundDuringPresentation = false
+        resultSearchController.searchBar.sizeToFit()
+
+        tableView.tableHeaderView = self.resultSearchController.searchBar
         tableView.reloadData()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
@@ -57,6 +68,10 @@ class LocationSearchViewController: UIViewController, UISearchResultsUpdating {
             self.matchingItems = response.mapItems
             self.tableView.reloadData()
         }
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 }
 
@@ -80,9 +95,8 @@ extension LocationSearchViewController: UITableViewDelegate, UITableViewDataSour
         print(selectedItem)
 
         self.delegate?.generateLocation(self, placemark: selectedItem)
-        resultSearchController?.active = false
+        resultSearchController.active = false
         self.dismissViewControllerAnimated(true, completion: nil)
-        
     }
     
     func parseAddress(selectedItem: MKPlacemark) -> String {
@@ -104,16 +118,4 @@ extension LocationSearchViewController: UITableViewDelegate, UITableViewDataSour
         )
         return addressLine
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

@@ -20,19 +20,17 @@
 		144EB0CA1CE0E73A00F9509F /* GesturePinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EB0C91CE0E73A00F9509F /* GesturePinTests.swift */; };
 		144EB0D51CE0E73A00F9509F /* GesturePinUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EB0D41CE0E73A00F9509F /* GesturePinUITests.swift */; };
 		144EB0E31CE0E7B900F9509F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 144EB0E21CE0E7B900F9509F /* MapKit.framework */; };
-		144EB0E51CE1301A00F9509F /* TestForPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EB0E41CE1301A00F9509F /* TestForPin.swift */; };
 		144EB0EC1CE1660F00F9509F /* VirtualTouristClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EB0EB1CE1660F00F9509F /* VirtualTouristClient.swift */; };
 		144EB1081CE1740700F9509F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EB1071CE1740700F9509F /* Constants.swift */; };
 		144EB10A1CE17A0000F9509F /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EB1091CE17A0000F9509F /* GCDBlackBox.swift */; };
 		144EB10C1CE17BD700F9509F /* imageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EB10B1CE17BD700F9509F /* imageInfo.swift */; };
 		144EB10E1CE192C800F9509F /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EB10D1CE192C800F9509F /* ImageDetailViewController.swift */; };
 		144EB1101CE1949D00F9509F /* image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EB10F1CE1949D00F9509F /* image.swift */; };
-		147DFD591CEBE57200F2946C /* TestVC1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147DFD581CEBE57200F2946C /* TestVC1.swift */; };
-		147DFD5B1CEBE58100F2946C /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147DFD5A1CEBE58100F2946C /* LocationSearchTable.swift */; };
+		144F23A71D01104300F0893D /* EXCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F23A61D01104300F0893D /* EXCollectionViewController.swift */; };
 		148DE8CB1CE2B6DC0021DF33 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DE8CA1CE2B6DC0021DF33 /* Pin.swift */; };
 		148DE8CD1CE2C9BA0021DF33 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DE8CC1CE2C9BA0021DF33 /* ImageCache.swift */; };
 		148DE8CF1CE2E8500021DF33 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DE8CE1CE2E8500021DF33 /* CoreDataStackManager.swift */; };
-		1491883B1CF20A400003175B /* TestForSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1491883A1CF20A400003175B /* TestForSearch.swift */; };
+		14C61B4C1D4DAB9100F3A1BD /* File.md in Sources */ = {isa = PBXBuildFile; fileRef = 14C61B4B1D4DAB9100F3A1BD /* File.md */; };
 		14F871CA1CEFDEDB00515D06 /* LocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F871C91CEFDEDB00515D06 /* LocationTableViewController.swift */; };
 		14F871CC1CEFE5B200515D06 /* LocationTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F871CB1CEFE5B200515D06 /* LocationTitle.swift */; };
 /* End PBXBuildFile section */
@@ -60,33 +58,31 @@
 		1423C7C81CE5400400D5F1A1 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		1436A5D31CE3E18900801591 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		1436A6121CE43AC100801591 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
-		144EB0B11CE0E73900F9509F /* GesturePin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GesturePin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		144EB0B11CE0E73900F9509F /* VirtualTourist1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTourist1.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		144EB0B41CE0E73A00F9509F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		144EB0B61CE0E73A00F9509F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		144EB0B91CE0E73A00F9509F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		144EB0BB1CE0E73A00F9509F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		144EB0BE1CE0E73A00F9509F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		144EB0C01CE0E73A00F9509F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		144EB0C51CE0E73A00F9509F /* GesturePinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GesturePinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		144EB0C51CE0E73A00F9509F /* VirtualTourist1.0.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualTourist1.0.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		144EB0C91CE0E73A00F9509F /* GesturePinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GesturePinTests.swift; sourceTree = "<group>"; };
 		144EB0CB1CE0E73A00F9509F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		144EB0D01CE0E73A00F9509F /* GesturePinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GesturePinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		144EB0D01CE0E73A00F9509F /* VirtualTourist1.0.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualTourist1.0.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		144EB0D41CE0E73A00F9509F /* GesturePinUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GesturePinUITests.swift; sourceTree = "<group>"; };
 		144EB0D61CE0E73A00F9509F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		144EB0E21CE0E7B900F9509F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		144EB0E41CE1301A00F9509F /* TestForPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestForPin.swift; sourceTree = "<group>"; };
 		144EB0EB1CE1660F00F9509F /* VirtualTouristClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtualTouristClient.swift; sourceTree = "<group>"; };
 		144EB1071CE1740700F9509F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Constants.swift; sourceTree = "<group>"; };
 		144EB1091CE17A0000F9509F /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		144EB10B1CE17BD700F9509F /* imageInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = imageInfo.swift; sourceTree = "<group>"; };
 		144EB10D1CE192C800F9509F /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		144EB10F1CE1949D00F9509F /* image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = image.swift; sourceTree = "<group>"; };
-		147DFD581CEBE57200F2946C /* TestVC1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC1.swift; sourceTree = "<group>"; };
-		147DFD5A1CEBE58100F2946C /* LocationSearchTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
+		144F23A61D01104300F0893D /* EXCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EXCollectionViewController.swift; sourceTree = "<group>"; };
 		148DE8CA1CE2B6DC0021DF33 /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		148DE8CC1CE2C9BA0021DF33 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		148DE8CE1CE2E8500021DF33 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
-		1491883A1CF20A400003175B /* TestForSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestForSearch.swift; sourceTree = "<group>"; };
+		14C61B4B1D4DAB9100F3A1BD /* File.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = File.md; sourceTree = "<group>"; };
 		14F871C91CEFDEDB00515D06 /* LocationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewController.swift; sourceTree = "<group>"; };
 		14F871CB1CEFE5B200515D06 /* LocationTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTitle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				1436A6121CE43AC100801591 /* CollectionViewController.swift */,
+				144F23A61D01104300F0893D /* EXCollectionViewController.swift */,
 				1423C7C81CE5400400D5F1A1 /* CollectionViewCell.swift */,
 				14F871C91CEFDEDB00515D06 /* LocationTableViewController.swift */,
 			);
@@ -141,9 +138,9 @@
 		144EB0B21CE0E73900F9509F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				144EB0B11CE0E73900F9509F /* GesturePin.app */,
-				144EB0C51CE0E73A00F9509F /* GesturePinTests.xctest */,
-				144EB0D01CE0E73A00F9509F /* GesturePinUITests.xctest */,
+				144EB0B11CE0E73900F9509F /* VirtualTourist1.0.app */,
+				144EB0C51CE0E73A00F9509F /* VirtualTourist1.0.xctest */,
+				144EB0D01CE0E73A00F9509F /* VirtualTourist1.0.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -157,12 +154,11 @@
 				144EB0B41CE0E73A00F9509F /* AppDelegate.swift */,
 				1436A5D21CE3E18900801591 /* Model.xcdatamodeld */,
 				144EB0B61CE0E73A00F9509F /* ViewController.swift */,
-				14138D331CF678930049A266 /* LocationSearchViewController.swift */,
 				14138D351CF67AA90049A266 /* VCExtensions.swift */,
+				14138D331CF678930049A266 /* LocationSearchViewController.swift */,
 				144EB0B81CE0E73A00F9509F /* Main.storyboard */,
 				1423C7C71CE53FDD00D5F1A1 /* CollectionViewGroup */,
 				144EB0E81CE1648400F9509F /* VTClients */,
-				147DFD5C1CEBE5C700F2946C /* Test */,
 				144EB0BB1CE0E73A00F9509F /* Assets.xcassets */,
 				144EB0BD1CE0E73A00F9509F /* LaunchScreen.storyboard */,
 				144EB0C01CE0E73A00F9509F /* Info.plist */,
@@ -198,27 +194,17 @@
 				14F871CB1CEFE5B200515D06 /* LocationTitle.swift */,
 				148DE8CC1CE2C9BA0021DF33 /* ImageCache.swift */,
 				144EB1071CE1740700F9509F /* Constants.swift */,
+				14C61B4B1D4DAB9100F3A1BD /* File.md */,
 			);
 			name = VTClients;
-			sourceTree = "<group>";
-		};
-		147DFD5C1CEBE5C700F2946C /* Test */ = {
-			isa = PBXGroup;
-			children = (
-				1491883A1CF20A400003175B /* TestForSearch.swift */,
-				144EB0E41CE1301A00F9509F /* TestForPin.swift */,
-				147DFD581CEBE57200F2946C /* TestVC1.swift */,
-				147DFD5A1CEBE58100F2946C /* LocationSearchTable.swift */,
-			);
-			name = Test;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		144EB0B01CE0E73900F9509F /* GesturePin */ = {
+		144EB0B01CE0E73900F9509F /* VirtualTourist1.0 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 144EB0D91CE0E73A00F9509F /* Build configuration list for PBXNativeTarget "GesturePin" */;
+			buildConfigurationList = 144EB0D91CE0E73A00F9509F /* Build configuration list for PBXNativeTarget "VirtualTourist1.0" */;
 			buildPhases = (
 				144EB0AD1CE0E73900F9509F /* Sources */,
 				144EB0AE1CE0E73900F9509F /* Frameworks */,
@@ -228,14 +214,14 @@
 			);
 			dependencies = (
 			);
-			name = GesturePin;
+			name = VirtualTourist1.0;
 			productName = GesturePin;
-			productReference = 144EB0B11CE0E73900F9509F /* GesturePin.app */;
+			productReference = 144EB0B11CE0E73900F9509F /* VirtualTourist1.0.app */;
 			productType = "com.apple.product-type.application";
 		};
-		144EB0C41CE0E73A00F9509F /* GesturePinTests */ = {
+		144EB0C41CE0E73A00F9509F /* VirtualTourist1.0Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 144EB0DC1CE0E73A00F9509F /* Build configuration list for PBXNativeTarget "GesturePinTests" */;
+			buildConfigurationList = 144EB0DC1CE0E73A00F9509F /* Build configuration list for PBXNativeTarget "VirtualTourist1.0Tests" */;
 			buildPhases = (
 				144EB0C11CE0E73A00F9509F /* Sources */,
 				144EB0C21CE0E73A00F9509F /* Frameworks */,
@@ -246,14 +232,14 @@
 			dependencies = (
 				144EB0C71CE0E73A00F9509F /* PBXTargetDependency */,
 			);
-			name = GesturePinTests;
+			name = VirtualTourist1.0Tests;
 			productName = GesturePinTests;
-			productReference = 144EB0C51CE0E73A00F9509F /* GesturePinTests.xctest */;
+			productReference = 144EB0C51CE0E73A00F9509F /* VirtualTourist1.0.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		144EB0CF1CE0E73A00F9509F /* GesturePinUITests */ = {
+		144EB0CF1CE0E73A00F9509F /* VirtualTourist1.0UITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 144EB0DF1CE0E73A00F9509F /* Build configuration list for PBXNativeTarget "GesturePinUITests" */;
+			buildConfigurationList = 144EB0DF1CE0E73A00F9509F /* Build configuration list for PBXNativeTarget "VirtualTourist1.0UITests" */;
 			buildPhases = (
 				144EB0CC1CE0E73A00F9509F /* Sources */,
 				144EB0CD1CE0E73A00F9509F /* Frameworks */,
@@ -264,9 +250,9 @@
 			dependencies = (
 				144EB0D21CE0E73A00F9509F /* PBXTargetDependency */,
 			);
-			name = GesturePinUITests;
+			name = VirtualTourist1.0UITests;
 			productName = GesturePinUITests;
-			productReference = 144EB0D01CE0E73A00F9509F /* GesturePinUITests.xctest */;
+			productReference = 144EB0D01CE0E73A00F9509F /* VirtualTourist1.0.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -295,7 +281,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 144EB0AC1CE0E73900F9509F /* Build configuration list for PBXProject "GesturePin" */;
+			buildConfigurationList = 144EB0AC1CE0E73900F9509F /* Build configuration list for PBXProject "VirtualTourist1.0" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -308,9 +294,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				144EB0B01CE0E73900F9509F /* GesturePin */,
-				144EB0C41CE0E73A00F9509F /* GesturePinTests */,
-				144EB0CF1CE0E73A00F9509F /* GesturePinUITests */,
+				144EB0B01CE0E73900F9509F /* VirtualTourist1.0 */,
+				144EB0C41CE0E73A00F9509F /* VirtualTourist1.0Tests */,
+				144EB0CF1CE0E73A00F9509F /* VirtualTourist1.0UITests */,
 			);
 		};
 /* End PBXProject section */
@@ -347,20 +333,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				144EB0E51CE1301A00F9509F /* TestForPin.swift in Sources */,
 				148DE8CB1CE2B6DC0021DF33 /* Pin.swift in Sources */,
 				14F871CA1CEFDEDB00515D06 /* LocationTableViewController.swift in Sources */,
-				147DFD591CEBE57200F2946C /* TestVC1.swift in Sources */,
+				14C61B4C1D4DAB9100F3A1BD /* File.md in Sources */,
 				144EB10C1CE17BD700F9509F /* imageInfo.swift in Sources */,
-				147DFD5B1CEBE58100F2946C /* LocationSearchTable.swift in Sources */,
 				1436A5D41CE3E18900801591 /* Model.xcdatamodeld in Sources */,
 				144EB0EC1CE1660F00F9509F /* VirtualTouristClient.swift in Sources */,
 				144EB0B71CE0E73A00F9509F /* ViewController.swift in Sources */,
 				148DE8CD1CE2C9BA0021DF33 /* ImageCache.swift in Sources */,
 				144EB0B51CE0E73A00F9509F /* AppDelegate.swift in Sources */,
-				1491883B1CF20A400003175B /* TestForSearch.swift in Sources */,
 				144EB1081CE1740700F9509F /* Constants.swift in Sources */,
 				14F871CC1CEFE5B200515D06 /* LocationTitle.swift in Sources */,
+				144F23A71D01104300F0893D /* EXCollectionViewController.swift in Sources */,
 				1436A6131CE43AC100801591 /* CollectionViewController.swift in Sources */,
 				148DE8CF1CE2E8500021DF33 /* CoreDataStackManager.swift in Sources */,
 				14138D361CF67AA90049A266 /* VCExtensions.swift in Sources */,
@@ -393,12 +377,12 @@
 /* Begin PBXTargetDependency section */
 		144EB0C71CE0E73A00F9509F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 144EB0B01CE0E73900F9509F /* GesturePin */;
+			target = 144EB0B01CE0E73900F9509F /* VirtualTourist1.0 */;
 			targetProxy = 144EB0C61CE0E73A00F9509F /* PBXContainerItemProxy */;
 		};
 		144EB0D21CE0E73A00F9509F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 144EB0B01CE0E73900F9509F /* GesturePin */;
+			target = 144EB0B01CE0E73900F9509F /* VirtualTourist1.0 */;
 			targetProxy = 144EB0D11CE0E73A00F9509F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -512,8 +496,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = GesturePin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = LX.GesturePin;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "LX.VirtualTourist-1.0";
+				PRODUCT_NAME = VirtualTourist1.0;
 			};
 			name = Debug;
 		};
@@ -523,8 +507,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = GesturePin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = LX.GesturePin;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "LX.VirtualTourist-1.0";
+				PRODUCT_NAME = VirtualTourist1.0;
 			};
 			name = Release;
 		};
@@ -535,8 +519,8 @@
 				INFOPLIST_FILE = GesturePinTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = LX.GesturePinTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GesturePin.app/GesturePin";
+				PRODUCT_NAME = VirtualTourist1.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VirtualTourist1.0.app/VirtualTourist1.0";
 			};
 			name = Debug;
 		};
@@ -547,8 +531,8 @@
 				INFOPLIST_FILE = GesturePinTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = LX.GesturePinTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GesturePin.app/GesturePin";
+				PRODUCT_NAME = VirtualTourist1.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VirtualTourist1.0.app/VirtualTourist1.0";
 			};
 			name = Release;
 		};
@@ -558,7 +542,7 @@
 				INFOPLIST_FILE = GesturePinUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = LX.GesturePinUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = VirtualTourist1.0;
 				TEST_TARGET_NAME = GesturePin;
 			};
 			name = Debug;
@@ -569,7 +553,7 @@
 				INFOPLIST_FILE = GesturePinUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = LX.GesturePinUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = VirtualTourist1.0;
 				TEST_TARGET_NAME = GesturePin;
 			};
 			name = Release;
@@ -577,7 +561,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		144EB0AC1CE0E73900F9509F /* Build configuration list for PBXProject "GesturePin" */ = {
+		144EB0AC1CE0E73900F9509F /* Build configuration list for PBXProject "VirtualTourist1.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				144EB0D71CE0E73A00F9509F /* Debug */,
@@ -586,7 +570,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		144EB0D91CE0E73A00F9509F /* Build configuration list for PBXNativeTarget "GesturePin" */ = {
+		144EB0D91CE0E73A00F9509F /* Build configuration list for PBXNativeTarget "VirtualTourist1.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				144EB0DA1CE0E73A00F9509F /* Debug */,
@@ -595,7 +579,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		144EB0DC1CE0E73A00F9509F /* Build configuration list for PBXNativeTarget "GesturePinTests" */ = {
+		144EB0DC1CE0E73A00F9509F /* Build configuration list for PBXNativeTarget "VirtualTourist1.0Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				144EB0DD1CE0E73A00F9509F /* Debug */,
@@ -604,7 +588,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		144EB0DF1CE0E73A00F9509F /* Build configuration list for PBXNativeTarget "GesturePinUITests" */ = {
+		144EB0DF1CE0E73A00F9509F /* Build configuration list for PBXNativeTarget "VirtualTourist1.0UITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				144EB0E01CE0E73A00F9509F /* Debug */,

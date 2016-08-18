@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "144EB0B01CE0E73900F9509F"
-               BuildableName = "GesturePin.app"
-               BlueprintName = "GesturePin"
-               ReferencedContainer = "container:GesturePin.xcodeproj">
+               BuildableName = "VirtualTourist1.0.app"
+               BlueprintName = "VirtualTourist1.0"
+               ReferencedContainer = "container:VirtualTourist1.0.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "144EB0C41CE0E73A00F9509F"
-               BuildableName = "GesturePinTests.xctest"
-               BlueprintName = "GesturePinTests"
-               ReferencedContainer = "container:GesturePin.xcodeproj">
+               BuildableName = "VirtualTourist1.0.xctest"
+               BlueprintName = "VirtualTourist1.0Tests"
+               ReferencedContainer = "container:VirtualTourist1.0.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "144EB0CF1CE0E73A00F9509F"
-               BuildableName = "GesturePinUITests.xctest"
-               BlueprintName = "GesturePinUITests"
-               ReferencedContainer = "container:GesturePin.xcodeproj">
+               BuildableName = "VirtualTourist1.0.xctest"
+               BlueprintName = "VirtualTourist1.0UITests"
+               ReferencedContainer = "container:VirtualTourist1.0.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "144EB0B01CE0E73900F9509F"
-            BuildableName = "GesturePin.app"
-            BlueprintName = "GesturePin"
-            ReferencedContainer = "container:GesturePin.xcodeproj">
+            BuildableName = "VirtualTourist1.0.app"
+            BlueprintName = "VirtualTourist1.0"
+            ReferencedContainer = "container:VirtualTourist1.0.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,11 +76,17 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "144EB0B01CE0E73900F9509F"
-            BuildableName = "GesturePin.app"
-            BlueprintName = "GesturePin"
-            ReferencedContainer = "container:GesturePin.xcodeproj">
+            BuildableName = "VirtualTourist1.0.app"
+            BlueprintName = "VirtualTourist1.0"
+            ReferencedContainer = "container:VirtualTourist1.0.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-com.apple.CoreData.ConcurrencyDebug 1"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -95,9 +101,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "144EB0B01CE0E73900F9509F"
-            BuildableName = "GesturePin.app"
-            BlueprintName = "GesturePin"
-            ReferencedContainer = "container:GesturePin.xcodeproj">
+            BuildableName = "VirtualTourist1.0.app"
+            BlueprintName = "VirtualTourist1.0"
+            ReferencedContainer = "container:VirtualTourist1.0.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

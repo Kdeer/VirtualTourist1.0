@@ -12,7 +12,7 @@ import Foundation
 
 class VirtualTouristClient: NSObject {
     
-    var imageInfos = [ImageInfo]()
+//    var imageInfos = [ImageInfo]()
     
     func taskForImages(filePath: String, completionHandler: (imageData: NSData?, error: NSError?) ->  Void) -> NSURLSessionTask {
         
@@ -23,7 +23,7 @@ class VirtualTouristClient: NSObject {
         
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             
-            if let error = downloadError {
+            if downloadError != nil {
                 completionHandler(imageData: nil, error: downloadError)
             } else {
                 completionHandler(imageData: data, error: nil)
@@ -31,10 +31,6 @@ class VirtualTouristClient: NSObject {
         }
         
         task.resume()
-        
-        
-        
-        
         return task
     }
     
@@ -90,7 +86,7 @@ class VirtualTouristClient: NSObject {
                 sendError("no photos array in data")
                 return
             }
-            if let photoArray = photosDictionary["photo"] as? [[String:AnyObject]]{
+            if (photosDictionary["photo"] as? [[String:AnyObject]]) != nil{
                 
 //            let imageURLArray = imageInfo.imagesFromResults(photoArray)
             completionHandlerForImages(success: true, result: photosDictionary, error: error)

@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:GesturePin.xcodeproj">
+      location = "self:/Users/Zack/Desktop/xcode file/P4/GesturePin copy/VirtualTourist1.0.xcodeproj">
    </FileRef>
 </Workspace>

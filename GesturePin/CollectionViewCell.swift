@@ -19,7 +19,7 @@ class CollectionViewCell: UICollectionViewCell {
     
     
     @IBAction func ClosingImage(sender: AnyObject) {
-        self.closingImage.hidden = true
+        closingImage.hidden = true
     }
     
     
