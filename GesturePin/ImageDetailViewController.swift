@@ -14,12 +14,12 @@ class ImageDetailViewController: UIViewController {
 
     var DetailedImage : image!
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 
         self.imageView.image = DetailedImage.imageFromLocation
     }
     
-    @IBAction func Dismiss(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func Dismiss(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

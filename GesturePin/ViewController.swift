@@ -40,7 +40,7 @@ class ViewController: UIViewController, GetLocation{
         LocationTableViewController().resultSearchController?.view.removeFromSuperview()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         let annotationsToRemove = myMap.annotations.filter{ $0 !== myMap.userLocation}
@@ -55,10 +55,10 @@ class ViewController: UIViewController, GetLocation{
         
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowImage" {
 
-            let controller: CollectionViewController = segue.destinationViewController as! CollectionViewController
+            let controller: CollectionViewController = segue.destination as! CollectionViewController
             controller.latitude = latitude
             controller.longitude = longitude
 
@@ -71,20 +71,20 @@ class ViewController: UIViewController, GetLocation{
                 }
             }
         }else if segue.identifier == "PassData"{
-            let controller: CollectionViewController = segue.destinationViewController as! CollectionViewController
+            let controller: CollectionViewController = segue.destination as! CollectionViewController
             controller.latitude = latitude
             controller.longitude = longitude
             controller.pinPoint = pinPoint
             controller.pinTitle = pinTitle
         }else if segue.identifier == "ShowLocation"  {
-            let LocationTableVC: LocationTableViewController = segue.destinationViewController as! LocationTableViewController
+            let LocationTableVC: LocationTableViewController = segue.destination as! LocationTableViewController
         }else if segue.identifier == "ShowAddress" {
-            let controller: LocationSearchViewController = segue.destinationViewController as! LocationSearchViewController
+            let controller: LocationSearchViewController = segue.destination as! LocationSearchViewController
             controller.delegate = self
         }
     }
     
-    func generateLocation(controller: LocationSearchViewController, placemark: MKPlacemark){
+    func generateLocation(_ controller: LocationSearchViewController, placemark: MKPlacemark){
         
         self.placemark = placemark
         
@@ -97,9 +97,9 @@ class ViewController: UIViewController, GetLocation{
         }
         
         let dictionary: [String: AnyObject] = [
-            "latitude" : placemark.coordinate.latitude,
-            "longitude" : placemark.coordinate.longitude,
-            "title" : self.placemark.title!
+            "latitude" : placemark.coordinate.latitude as AnyObject,
+            "longitude" : placemark.coordinate.longitude as AnyObject,
+            "title" : self.placemark.title! as AnyObject
         ]
         pinTitle = self.placemark.title!
         let pin = Pin(dictionary: dictionary, context: self.sharedContext)
@@ -115,11 +115,11 @@ class ViewController: UIViewController, GetLocation{
         myMap.setRegion(region, animated: true)
     }
     
-    func action(gestureRecognizer:UIGestureRecognizer) {
+    func action(_ gestureRecognizer:UIGestureRecognizer) {
         
-        if gestureRecognizer.state == UIGestureRecognizerState.Began {
-            let touchPoint = gestureRecognizer.locationInView(myMap)
-            let newCoordinates = myMap.convertPoint(touchPoint, toCoordinateFromView: myMap)
+        if gestureRecognizer.state == UIGestureRecognizerState.began {
+            let touchPoint = gestureRecognizer.location(in: myMap)
+            let newCoordinates = myMap.convert(touchPoint, toCoordinateFrom: myMap)
             CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude), completionHandler: {(placemarks, error) -> Void in
                 if error != nil {
                     print("Reverse geocoder failed with error" + error!.localizedDescription)
@@ -132,9 +132,9 @@ class ViewController: UIViewController, GetLocation{
                     self.myMap.addAnnotation(self.placemark)
                     
                     let dictionary: [String: AnyObject] = [
-                        "latitude" : newCoordinates.latitude,
-                        "longitude" : newCoordinates.longitude,
-                        "title" : self.placemark.title!
+                        "latitude" : newCoordinates.latitude as AnyObject,
+                        "longitude" : newCoordinates.longitude as AnyObject,
+                        "title" : self.placemark.title! as AnyObject
                     ]
                     self.pinTitle = self.placemark.title!
                     
@@ -144,28 +144,28 @@ class ViewController: UIViewController, GetLocation{
                     self.pinPoint = pin
                     self.pinPoints.append(pin)
                     self.saveContext()
-                    self.performSegueWithIdentifier("PassData", sender: self)
+                    self.performSegue(withIdentifier: "PassData", sender: self)
                 }
             })
         }
     }
     
-    @IBAction func SearchButtonPressed(sender: AnyObject) {
+    @IBAction func SearchButtonPressed(_ sender: AnyObject) {
         
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("LocationSearchViewController") as! LocationSearchViewController
+        let controller = storyboard!.instantiateViewController(withIdentifier: "LocationSearchViewController") as! LocationSearchViewController
         controller.delegate = self
         
-        self.presentViewController(controller, animated: false, completion: nil)
+        self.present(controller, animated: false, completion: nil)
         
     }
     
-    @IBAction func HugeRefresh(sender: AnyObject) {
+    @IBAction func HugeRefresh(_ sender: AnyObject) {
         
         
         print(pinPoints)
-        let alertController = UIAlertController(title: "Alert", message: "Sure to delete all you pins?", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Alert", message: "Sure to delete all you pins?", preferredStyle: .alert)
         
-        let OKAction = UIAlertAction(title: "Yes", style: .Default){
+        let OKAction = UIAlertAction(title: "Yes", style: .default){
             (action) in
             
             let annotationsToRemove = self.myMap.annotations.filter{ $0 !== self.myMap.userLocation}
@@ -175,12 +175,12 @@ class ViewController: UIViewController, GetLocation{
                 
                 for i in 0...self.pinPoints.count - 1 {
                     if self.pinPoints[i].imageinfos.isEmpty {
-                        self.sharedContext.deleteObject(self.pinPoints[i])
+                        self.sharedContext.delete(self.pinPoints[i])
                     }else {
                     for m in 0...self.pinPoints[i].imageinfos.count-1 {
                         let path = self.pathForIdentifier(self.pinPoints[i].imageinfos[m].id)
                         do {
-                            try NSFileManager.defaultManager().removeItemAtPath(path)
+                            try FileManager.default.removeItem(atPath: path)
                         }catch _{}
                     }
                 }
@@ -188,7 +188,7 @@ class ViewController: UIViewController, GetLocation{
                 
                 for i in 0...self.pinPoints.count-1 {
                     
-                    self.sharedContext.deleteObject(self.pinPoints[i])
+                    self.sharedContext.delete(self.pinPoints[i])
                     self.saveContext()
                 }
 
@@ -197,11 +197,11 @@ class ViewController: UIViewController, GetLocation{
                 for m in 0...self.pinPoints[0].imageinfos.count-1 {
                     let path = self.pathForIdentifier(self.pinPoints[0].imageinfos[m].id)
                     do {
-                        try NSFileManager.defaultManager().removeItemAtPath(path)
+                        try FileManager.default.removeItem(atPath: path)
                     }catch _{}
                 }
                 
-                self.sharedContext.deleteObject(self.pinPoints[0])
+                self.sharedContext.delete(self.pinPoints[0])
                 self.saveContext()
             }
                 self.pinPoints.removeAll()
@@ -211,25 +211,25 @@ class ViewController: UIViewController, GetLocation{
         
         alertController.addAction(OKAction)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         alertController.addAction(cancelAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
 
     }
     
-    @IBAction func GoForLocations(sender: AnyObject) {
+    @IBAction func GoForLocations(_ sender: AnyObject) {
         
-        self.performSegueWithIdentifier("ShowLocation", sender: self)
+        self.performSegue(withIdentifier: "ShowLocation", sender: self)
     }
     
-    @IBAction func GoSatellite(sender: AnyObject) {
-        if myMap.mapType == .Satellite {
-            myMap.mapType = .Standard
+    @IBAction func GoSatellite(_ sender: AnyObject) {
+        if myMap.mapType == .satellite {
+            myMap.mapType = .standard
             goSatellite.tintColor = nil
         }else {
-            myMap.mapType = .Satellite
-            goSatellite.tintColor = UIColor.blueColor()
+            myMap.mapType = .satellite
+            goSatellite.tintColor = UIColor.blue
         }
         
     }
@@ -237,11 +237,11 @@ class ViewController: UIViewController, GetLocation{
     func fetchAllPins() -> [Pin] {
         
         // Create the Fetch Request
-        let fetchRequest = NSFetchRequest(entityName: "Pin")
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Pin")
         
         // Execute the Fetch Request
         do {
-            return try sharedContext.executeFetchRequest(fetchRequest) as! [Pin]
+            return try sharedContext.fetch(fetchRequest) as! [Pin]
         } catch  let error as NSError {
             print("Error in fetchAllActors(): \(error)")
             return [Pin]()
@@ -256,14 +256,14 @@ class ViewController: UIViewController, GetLocation{
     }
     
     var filePath : String {
-        let manager = NSFileManager.defaultManager()
-        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first! as NSURL
-        return url.URLByAppendingPathComponent("mapRegionArchive").path!
+        let manager = FileManager.default
+        let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first! as URL
+        return url.appendingPathComponent("mapRegionArchive").path
     }
     
-    func pathForIdentifier(identifier: String) -> String {
-        let documentsDirectoryURL: NSURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-        let fullURL = documentsDirectoryURL.URLByAppendingPathComponent(identifier)
-        return fullURL.path!
+    func pathForIdentifier(_ identifier: String) -> String {
+        let documentsDirectoryURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fullURL = documentsDirectoryURL.appendingPathComponent(identifier)
+        return fullURL.path
     }
 }

@@ -17,15 +17,15 @@ class ImageInfo: NSManagedObject {
     @NSManaged var id: String!
     @NSManaged var pinPoint: Pin?
     
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
-        let entity =  NSEntityDescription.entityForName("ImageInfo", inManagedObjectContext: context)!
+        let entity =  NSEntityDescription.entity(forEntityName: "ImageInfo", in: context)!
         
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        super.init(entity: entity, insertInto: context)
         
         id = dictionary["id"] as? String
         imageURL = dictionary["url_m"] as? String

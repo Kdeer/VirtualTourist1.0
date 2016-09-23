@@ -25,9 +25,9 @@ extension ViewController{
         NSKeyedArchiver.archiveRootObject(dictionary, toFile: filePath)
     }
     
-    func restoreMapRegion(animated: Bool) {
+    func restoreMapRegion(_ animated: Bool) {
         
-        if let regionDictionary = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as? [String : AnyObject] {
+        if let regionDictionary = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? [String : AnyObject] {
             
             let longitude = regionDictionary["longitude"] as! CLLocationDegrees
             let latitude = regionDictionary["latitude"] as! CLLocationDegrees
@@ -45,7 +45,7 @@ extension ViewController{
         }
     }
     
-    func IRound(number: Double) -> Double{
+    func IRound(_ number: Double) -> Double{
         
         var number = number
         number = Double(round(number*100000000)/100000000)
@@ -56,14 +56,14 @@ extension ViewController{
 
 extension ViewController: MKMapViewDelegate {
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         view.canShowCallout = true
  
         if control == view.rightCalloutAccessoryView {
             latitude = view.annotation!.coordinate.latitude
             longitude = view.annotation!.coordinate.longitude
             pinTitle = view.annotation!.title!
-            self.performSegueWithIdentifier("ShowImage", sender: self)
+            self.performSegue(withIdentifier: "ShowImage", sender: self)
 
         }else if control == view.leftCalloutAccessoryView {
             
@@ -74,12 +74,12 @@ extension ViewController: MKMapViewDelegate {
                     for m in 0...pinPoints[r].imageinfos.count - 1 {
                         let path = self.pathForIdentifier(self.pinPoints[r].imageinfos[m].id)
                         do {
-                            try NSFileManager.defaultManager().removeItemAtPath(path)
+                            try FileManager.default.removeItem(atPath: path)
                         }catch _{}
                         }
                     }
-                    sharedContext.deleteObject(pinPoints[r])
-                    pinPoints.removeAtIndex(r)
+                    sharedContext.delete(pinPoints[r])
+                    pinPoints.remove(at: r)
                     saveContext()
                     
                 }
@@ -88,27 +88,27 @@ extension ViewController: MKMapViewDelegate {
         }
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
         let reuseId = "pin"
         
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
         
         let RunImage = UIImage(named: "look")
-        let RunButton = UIButton(type: .Custom)
-        RunButton.frame = CGRectMake(0, 0, 50, 50)
-        RunButton.setImage(RunImage, forState: .Normal)
+        let RunButton = UIButton(type: .custom)
+        RunButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        RunButton.setImage(RunImage, for: UIControlState())
         
         let DeleteImage = UIImage(named: "delete")
-        let DeleteButton = UIButton(type: .Custom)
-        DeleteButton.frame = CGRectMake(0, 0, 23, 23)
-        DeleteButton.setImage(DeleteImage, forState: .Normal)
+        let DeleteButton = UIButton(type: .custom)
+        DeleteButton.frame = CGRect(x: 0, y: 0, width: 23, height: 23)
+        DeleteButton.setImage(DeleteImage, for: UIControlState())
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView?.animatesDrop = true
             pinView?.canShowCallout = true
-            pinView!.pinTintColor = .blueColor()
+            pinView!.pinTintColor = UIColor.blue
             pinView!.rightCalloutAccessoryView = RunButton
             pinView!.leftCalloutAccessoryView = DeleteButton
         }
@@ -118,11 +118,11 @@ extension ViewController: MKMapViewDelegate {
         return pinView
     }
     
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
     }
     
-    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         saveMapRegion()
     }
 }

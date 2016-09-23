@@ -27,15 +27,15 @@ class LocationTableViewController: UITableViewController, UISearchResultsUpdatin
         self.resultSearchController?.view.removeFromSuperview()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        pinPoints = fetchAllPins().reverse()
+        pinPoints = fetchAllPins().reversed()
         print(filteredResults)
     }
     
     override func viewDidLoad() {
         
-        self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         resultSearchController = UISearchController(searchResultsController: nil)
         resultSearchController.searchResultsUpdater = self
@@ -49,9 +49,9 @@ class LocationTableViewController: UITableViewController, UISearchResultsUpdatin
     
     
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
-        if resultSearchController.active {
+        if resultSearchController.isActive {
             return filteredResults.count
         }else {
         
@@ -59,65 +59,65 @@ class LocationTableViewController: UITableViewController, UISearchResultsUpdatin
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell", forIndexPath: indexPath) as UITableViewCell!
-        let locations = pinPoints[indexPath.row]
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as UITableViewCell!
+        let locations = pinPoints[(indexPath as NSIndexPath).row]
         
-        if resultSearchController.active {
-            cell.textLabel?.text = self.filteredResults[indexPath.row]
-            return cell
+        if resultSearchController.isActive {
+            cell?.textLabel?.text = self.filteredResults[(indexPath as NSIndexPath).row]
+            return cell!
         }else {
         
-        cell.textLabel!.text = locations.title!
-        titleArray.append(cell.textLabel!.text!)
-        return cell
+        cell?.textLabel!.text = locations.title!
+        titleArray.append((cell?.textLabel!.text!)!)
+        return cell!
         }
     }
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         
-        filteredResults.removeAll(keepCapacity: false)
+        filteredResults.removeAll(keepingCapacity: false)
             
         let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
-        let array = (self.titleArray as NSArray).filteredArrayUsingPredicate(searchPredicate)
+        let array = (self.titleArray as NSArray).filtered(using: searchPredicate)
         filteredResults = array as! [String]
         tableView.reloadData()
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if resultSearchController.active {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if resultSearchController.isActive {
             for i in 0...pinPoints.count - 1 {
-                if filteredResults[indexPath.row] == pinPoints[i].title {
+                if filteredResults[(indexPath as NSIndexPath).row] == pinPoints[i].title {
                     self.pinPoint = pinPoints[i]
                     self.pinTitle = pinPoints[i].title
-                    self.performSegueWithIdentifier("ShowImage", sender: self)
+                    self.performSegue(withIdentifier: "ShowImage", sender: self)
                 }
         }
         }else {
-        let locations = pinPoints[indexPath.row]
+        let locations = pinPoints[(indexPath as NSIndexPath).row]
         print(locations)
         self.pinPoint = locations
-        pinTitle = pinPoints[indexPath.row].title
-        self.performSegueWithIdentifier("ShowImage", sender: self)
+        pinTitle = pinPoints[(indexPath as NSIndexPath).row].title
+        self.performSegue(withIdentifier: "ShowImage", sender: self)
         }
         
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         switch (editingStyle) {
-        case .Delete:
+        case .delete:
             
-            if pinPoints[indexPath.row].imageinfos.count > 0 {
-            for m in 0...pinPoints[indexPath.row].imageinfos.count-1{
-                let path = self.pathForIdentifier(pinPoints[indexPath.row].imageinfos[m].id)
+            if pinPoints[(indexPath as NSIndexPath).row].imageinfos.count > 0 {
+            for m in 0...pinPoints[(indexPath as NSIndexPath).row].imageinfos.count-1{
+                let path = self.pathForIdentifier(pinPoints[(indexPath as NSIndexPath).row].imageinfos[m].id)
                 do {
-                    try NSFileManager.defaultManager().removeItemAtPath(path)
+                    try FileManager.default.removeItem(atPath: path)
                 }catch _{}
             }
             }
-            sharedContext.deleteObject(pinPoints[indexPath.row])
-            pinPoints.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+            sharedContext.delete(pinPoints[(indexPath as NSIndexPath).row])
+            pinPoints.remove(at: (indexPath as NSIndexPath).row)
+            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.fade)
             self.saveContext()
             print(pinPoints)
 
@@ -128,15 +128,15 @@ class LocationTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowImage" {
             
-            let CollectionVC: CollectionViewController = segue.destinationViewController as! CollectionViewController
+            let CollectionVC: CollectionViewController = segue.destination as! CollectionViewController
             CollectionVC.latitude = self.latitude
             CollectionVC.longitude = self.longitude
             CollectionVC.pinPoint = self.pinPoint
             CollectionVC.pinTitle = self.pinTitle
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -155,21 +155,21 @@ class LocationTableViewController: UITableViewController, UISearchResultsUpdatin
     func fetchAllPins() -> [Pin] {
         
         // Create the Fetch Request
-        let fetchRequest = NSFetchRequest(entityName: "Pin")
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Pin")
         
         // Execute the Fetch Request
         do {
-            return try sharedContext.executeFetchRequest(fetchRequest) as! [Pin]
+            return try sharedContext.fetch(fetchRequest) as! [Pin]
         } catch  let error as NSError {
             print("Error in fetchAllActors(): \(error)")
             return [Pin]()
         }
     }
     
-    func pathForIdentifier(identifier: String) -> String {
-        let documentsDirectoryURL: NSURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-        let fullURL = documentsDirectoryURL.URLByAppendingPathComponent(identifier)
-        return fullURL.path!
+    func pathForIdentifier(_ identifier: String) -> String {
+        let documentsDirectoryURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fullURL = documentsDirectoryURL.appendingPathComponent(identifier)
+        return fullURL.path
     }
     
     

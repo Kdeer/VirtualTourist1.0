@@ -18,18 +18,18 @@ class Pin: NSManagedObject{
     @NSManaged var title: String?
     @NSManaged var imageinfos: [ImageInfo]
     
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     init(dictionary: [String:AnyObject], context: NSManagedObjectContext){
         
-        let entity =  NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)!
+        let entity =  NSEntityDescription.entity(forEntityName: "Pin", in: context)!
         
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        super.init(entity: entity, insertInto: context)
         
-        latitude = dictionary["latitude"] as! Double
-        longitude = dictionary["longitude"] as! Double
+        latitude = dictionary["latitude"] as! NSNumber
+        longitude = dictionary["longitude"] as! NSNumber
         title = dictionary["title"] as? String
         
     }

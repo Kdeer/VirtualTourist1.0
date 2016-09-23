@@ -18,14 +18,14 @@ class CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var Adicator: UIActivityIndicatorView!
     
     
-    @IBAction func ClosingImage(sender: AnyObject) {
-        closingImage.hidden = true
+    @IBAction func ClosingImage(_ sender: AnyObject) {
+        closingImage.isHidden = true
     }
     
     
     
     
-    var taskToCancelifCellIsReused: NSURLSessionTask? {
+    var taskToCancelifCellIsReused: URLSessionTask? {
         
         didSet {
             if let taskToCancel = oldValue {

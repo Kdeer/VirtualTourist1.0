@@ -14,29 +14,29 @@ class VirtualTouristClient: NSObject {
     
 //    var imageInfos = [ImageInfo]()
     
-    func taskForImages(filePath: String, completionHandler: (imageData: NSData?, error: NSError?) ->  Void) -> NSURLSessionTask {
+    func taskForImages(_ filePath: String, completionHandler: @escaping (_ imageData: Data?, _ error: NSError?) ->  Void) -> URLSessionTask {
         
-        let url = NSURL(string: filePath)
+        let url = URL(string: filePath)
         
-        let request = NSURLRequest(URL: url!)
-        let session = NSURLSession.sharedSession()
+        let request = URLRequest(url: url!)
+        let session = URLSession.shared
         
-        let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+        let task = session.dataTask(with: request, completionHandler: {data, response, downloadError in
             
             if downloadError != nil {
-                completionHandler(imageData: nil, error: downloadError)
+                completionHandler(nil, downloadError as NSError?)
             } else {
-                completionHandler(imageData: data, error: nil)
+                completionHandler(data, nil)
             }
-        }
+        }) 
         
         task.resume()
         return task
     }
     
-    func imagesAtLocation(latitude: Double, longitude: Double, completionHandlerForImages: (success: Bool, result: AnyObject!, error: NSError?) -> Void){
+    func imagesAtLocation(_ latitude: Double, longitude: Double, completionHandlerForImages: @escaping (_ success: Bool, _ result: AnyObject?, _ error: NSError?) -> Void){
         
-        let methodParameters: [String: String!] =
+        let methodParameters: [String: String?] =
             [
                 Constants.FlickrParameterKeys.Method: Constants.FlickrParameterValues.SearchMethod,
                 Constants.FlickrParameterKeys.APIKey: Constants.FlickrParameterValues.APIKey,
@@ -47,16 +47,16 @@ class VirtualTouristClient: NSObject {
                 Constants.FlickrParameterKeys.NoJSONCallback: Constants.FlickrParameterValues.DisableJSONCallback
         ]
         
-        let session = NSURLSession.sharedSession()
-        let url = flickrURLFromParameters(methodParameters)
-        let request = NSMutableURLRequest(URL: url)
+        let session = URLSession.shared
+        let url = flickrURLFromParameters(methodParameters as [String : AnyObject])
+        let request = URLRequest(url: url)
         
-        let task = session.dataTaskWithRequest(request){(data, response, error) in
+        let task = session.dataTask(with: request, completionHandler: {(data, response, error) in
             
-            func sendError(error: String){
+            func sendError(_ error: String){
                 let userInfo = [NSLocalizedDescriptionKey: error]
                 
-                completionHandlerForImages(success: false, result: nil, error: NSError(domain: "imagesAtLocation", code: 1, userInfo: userInfo))
+                completionHandlerForImages(false, nil, NSError(domain: "imagesAtLocation", code: 1, userInfo: userInfo))
             }
             
             guard error == nil else{
@@ -64,7 +64,7 @@ class VirtualTouristClient: NSObject {
                 return
             }
             
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode , statusCode >= 200 && statusCode <= 299 else {
                 sendError("Your request returned a status code other than 2xx!")
                 return
             }
@@ -76,7 +76,7 @@ class VirtualTouristClient: NSObject {
             
             let parsedResults: AnyObject!
             do{
-                parsedResults = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                parsedResults = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject!
             }catch {
                 sendError("cannot parse the data")
                 return
@@ -89,18 +89,18 @@ class VirtualTouristClient: NSObject {
             if (photosDictionary["photo"] as? [[String:AnyObject]]) != nil{
                 
 //            let imageURLArray = imageInfo.imagesFromResults(photoArray)
-            completionHandlerForImages(success: true, result: photosDictionary, error: error)
+            completionHandlerForImages(true, photosDictionary as AnyObject?, error as NSError?)
             }else {
-                completionHandlerForImages(success: false, result: nil, error: error)
+                completionHandlerForImages(false, nil, error as NSError?)
             }
             
-        }
+        })
         task.resume()
 
     }
     
     
-    private func bboxString(latitude: Double, longitude: Double) -> String {
+    fileprivate func bboxString(_ latitude: Double, longitude: Double) -> String {
         // ensure bbox is bounded by minimum and maximums
 //        if let latitude = Double(latitudeTextField.text!), let longitude = Double(longitudeTextField.text!) {
             let minimumLon = max(longitude - 1, -180)
@@ -120,20 +120,20 @@ class VirtualTouristClient: NSObject {
         return Singleton.sharedInstance
     }
     
-    private func flickrURLFromParameters(parameters: [String:AnyObject]) -> NSURL {
+    fileprivate func flickrURLFromParameters(_ parameters: [String:AnyObject]) -> URL {
         
-        let components = NSURLComponents()
+        var components = URLComponents()
         components.scheme = "https"
         components.host = "api.flickr.com"
         components.path = "/services/rest"
-        components.queryItems = [NSURLQueryItem]()
+        components.queryItems = [URLQueryItem]()
         
         for (key, value) in parameters {
-            let queryItem = NSURLQueryItem(name: key, value: "\(value)")
+            let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
         
-        return components.URL!
+        return components.url!
     }
     
     struct Caches {

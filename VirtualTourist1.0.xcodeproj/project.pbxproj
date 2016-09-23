@@ -268,15 +268,18 @@
 					144EB0B01CE0E73900F9509F = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 3KEDNP64AW;
+						LastSwiftMigration = 0800;
 					};
 					144EB0C41CE0E73A00F9509F = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 3KEDNP64AW;
+						LastSwiftMigration = 0800;
 						TestTargetID = 144EB0B01CE0E73900F9509F;
 					};
 					144EB0CF1CE0E73A00F9509F = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 3KEDNP64AW;
+						LastSwiftMigration = 0800;
 						TestTargetID = 144EB0B01CE0E73900F9509F;
 					};
 				};
@@ -498,6 +501,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "LX.VirtualTourist-1.0";
 				PRODUCT_NAME = VirtualTourist1.0;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -509,6 +513,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "LX.VirtualTourist-1.0";
 				PRODUCT_NAME = VirtualTourist1.0;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -520,6 +525,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = LX.GesturePinTests;
 				PRODUCT_NAME = VirtualTourist1.0;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VirtualTourist1.0.app/VirtualTourist1.0";
 			};
 			name = Debug;
@@ -532,6 +538,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = LX.GesturePinTests;
 				PRODUCT_NAME = VirtualTourist1.0;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VirtualTourist1.0.app/VirtualTourist1.0";
 			};
 			name = Release;
@@ -543,6 +550,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = LX.GesturePinUITests;
 				PRODUCT_NAME = VirtualTourist1.0;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = GesturePin;
 			};
 			name = Debug;
@@ -554,6 +562,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = LX.GesturePinUITests;
 				PRODUCT_NAME = VirtualTourist1.0;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = GesturePin;
 			};
 			name = Release;

@@ -12,11 +12,11 @@ import Foundation
 
 class ImageCache {
     
-    var inMemoryCache = NSCache()
+    var inMemoryCache = NSCache<AnyObject, AnyObject>()
 
     // MARK: - Retreiving images
     
-    func imageWithIdentifier(identifier: String?) -> UIImage? {
+    func imageWithIdentifier(_ identifier: String?) -> UIImage? {
         
         // If the identifier is nil, or empty, return nil
         if identifier == nil || identifier! == "" {
@@ -26,12 +26,12 @@ class ImageCache {
         let path = pathForIdentifier(identifier!)
         
         // First try the memory cache
-        if let image = inMemoryCache.objectForKey(path) as? UIImage {
+        if let image = inMemoryCache.object(forKey: path as AnyObject) as? UIImage {
             return image
         }
         
         // Next Try the hard drive
-        if let data = NSData(contentsOfFile: path) {
+        if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
             return UIImage(data: data)
         }
         return nil
@@ -40,18 +40,18 @@ class ImageCache {
     // MARK: - Saving images
     
     
-    func storeImage(image: UIImage?, withIdentifier identifier: String?) {
+    func storeImage(_ image: UIImage?, withIdentifier identifier: String?) {
         if let id = identifier {
             let path = pathForIdentifier(id)
             if let goodImage = image {
                 // Otherwise, keep the image in memory
-                inMemoryCache.setObject(goodImage, forKey: path)
+                inMemoryCache.setObject(goodImage, forKey: path as AnyObject)
                 let data = UIImagePNGRepresentation(goodImage)!
-                data.writeToFile(path, atomically: true)
+                try? data.write(to: URL(fileURLWithPath: path), options: [.atomic])
             } else {
-                inMemoryCache.removeObjectForKey(path)
+                inMemoryCache.removeObject(forKey: path as AnyObject)
                 do {
-                    try NSFileManager.defaultManager().removeItemAtPath(path)
+                    try FileManager.default.removeItem(atPath: path)
                     
                 } catch _ {}
                 
@@ -65,10 +65,10 @@ class ImageCache {
 
     // MARK: - Helper
 
-    func pathForIdentifier(identifier: String) -> String {
-        let documentsDirectoryURL: NSURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-        let fullURL = documentsDirectoryURL.URLByAppendingPathComponent(identifier)
-        return fullURL.path!
+    func pathForIdentifier(_ identifier: String) -> String {
+        let documentsDirectoryURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fullURL = documentsDirectoryURL.appendingPathComponent(identifier)
+        return fullURL.path
     }
     
     

@@ -11,7 +11,7 @@ import UIKit
 import MapKit
 
 protocol GetLocation {
-    func generateLocation(controller: LocationSearchViewController, placemark: MKPlacemark)
+    func generateLocation(_ controller: LocationSearchViewController, placemark: MKPlacemark)
 }
 
 class LocationSearchViewController: UIViewController, UISearchResultsUpdating {
@@ -31,8 +31,8 @@ class LocationSearchViewController: UIViewController, UISearchResultsUpdating {
     var delegate: GetLocation?
     
     
-    @IBAction func Return(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func Return(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -47,11 +47,11 @@ class LocationSearchViewController: UIViewController, UISearchResultsUpdating {
         tableView.reloadData()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         guard let searchBarText = searchController.searchBar.text else {
             print("no map view")
             return
@@ -61,7 +61,7 @@ class LocationSearchViewController: UIViewController, UISearchResultsUpdating {
         request.naturalLanguageQuery = searchBarText
         let search = MKLocalSearch(request: request)
         
-        search.startWithCompletionHandler{ response, _ in
+        search.start{ response, _ in
             guard let response = response else {
                 return
             }
@@ -70,36 +70,36 @@ class LocationSearchViewController: UIViewController, UISearchResultsUpdating {
         }
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 }
 
 extension LocationSearchViewController: UITableViewDelegate, UITableViewDataSource{
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return matchingItems.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell")!
-        let selectedItem = matchingItems[indexPath.row].placemark
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        let selectedItem = matchingItems[(indexPath as NSIndexPath).row].placemark
         cell.textLabel?.text = selectedItem.name
         cell.detailTextLabel?.text = parseAddress(selectedItem)
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedItem = matchingItems[indexPath.row].placemark
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedItem = matchingItems[(indexPath as NSIndexPath).row].placemark
         print(selectedItem)
 
         self.delegate?.generateLocation(self, placemark: selectedItem)
-        resultSearchController.active = false
-        self.dismissViewControllerAnimated(true, completion: nil)
+        resultSearchController.isActive = false
+        self.dismiss(animated: true, completion: nil)
     }
     
-    func parseAddress(selectedItem: MKPlacemark) -> String {
+    func parseAddress(_ selectedItem: MKPlacemark) -> String {
         
         let firstSpace = (selectedItem.subThoroughfare != nil && selectedItem.thoroughfare != nil) ? " " : ""
         let comma = (selectedItem.subThoroughfare != nil && selectedItem.thoroughfare != nil) && (selectedItem.subAdministrativeArea != nil || selectedItem.subAdministrativeArea != nil) ? "," : ""

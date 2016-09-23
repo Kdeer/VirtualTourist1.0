@@ -35,7 +35,7 @@ class CollectionViewController: UIViewController{
         collectionView.dataSource = self
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         let mapSpan = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
@@ -54,9 +54,9 @@ class CollectionViewController: UIViewController{
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowLocation"  {
-            let LocationTableVC: LocationTableViewController = segue.destinationViewController as! LocationTableViewController
+            let LocationTableVC: LocationTableViewController = segue.destination as! LocationTableViewController
         }
     }
     
@@ -68,13 +68,13 @@ class CollectionViewController: UIViewController{
             
             let path = pathForIdentifier(pinPoint.imageinfos[i].id)
             do {
-                try NSFileManager.defaultManager().removeItemAtPath(path)
+                try FileManager.default.removeItem(atPath: path)
             }catch _{}
         }
         var imageCollection = pinPoint.imageinfos[0...pinPoint.imageinfos.count-1]
         for i in 0...pinPoint.imageinfos.count-1 {
             imageCollection[i].pinPoint = nil
-            sharedContext.deleteObject(imageCollection[i])
+            sharedContext.delete(imageCollection[i])
             saveContext()
         }
         getMeImages()
@@ -82,26 +82,26 @@ class CollectionViewController: UIViewController{
     }
     
     //mark: FreshButton Action
-    @IBAction func FreshButton(sender: AnyObject) {
+    @IBAction func FreshButton(_ sender: AnyObject) {
         updatedRefreshPage()
     }
     
-    @IBAction func Editing(sender: AnyObject) {
+    @IBAction func Editing(_ sender: AnyObject) {
         
         if editingButton.title == "Edit" {
             editingButton.title = "Done"
-            for item in collectionView!.visibleCells() as![CollectionViewCell] {
-                let indexPath : NSIndexPath = self.collectionView!.indexPathForCell(item as CollectionViewCell)!
-                let cell = collectionView.cellForItemAtIndexPath(indexPath) as! CollectionViewCell
+            for item in collectionView!.visibleCells as![CollectionViewCell] {
+                let indexPath : IndexPath = self.collectionView!.indexPath(for: item as CollectionViewCell)!
+                let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
                 cell.imageView.alpha = 0.5
             }
             
         }else {
             
             self.editingButton.title = "Edit"
-            for item in self.collectionView!.visibleCells() as![CollectionViewCell] {
-                let indexPath : NSIndexPath = collectionView!.indexPathForCell(item as CollectionViewCell)!
-                let cell = collectionView.cellForItemAtIndexPath(indexPath) as! CollectionViewCell
+            for item in self.collectionView!.visibleCells as![CollectionViewCell] {
+                let indexPath : IndexPath = collectionView!.indexPath(for: item as CollectionViewCell)!
+                let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
                 cell.imageView.alpha = 1
             }
             destinyCellNumber.removeAll()
@@ -110,9 +110,9 @@ class CollectionViewController: UIViewController{
                 for i in 0...pinPoint1.count-1 {
                     let path = pathForIdentifier(bunchOfId[i])
                     do {
-                        try NSFileManager.defaultManager().removeItemAtPath(path)
+                        try FileManager.default.removeItem(atPath: path)
                     } catch _ {}
-                    sharedContext.deleteObject(pinPoint1[i])
+                    sharedContext.delete(pinPoint1[i])
                     saveContext()
                 }
             }
@@ -125,22 +125,22 @@ class CollectionViewController: UIViewController{
         }
     }
     
-    @IBAction func ScatterView(sender: AnyObject) {
-        editingButton.enabled = true
+    @IBAction func ScatterView(_ sender: AnyObject) {
+        editingButton.isEnabled = true
         destinyNumber = 1
-        collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
         collectionView.reloadData()
     }
     
-    @IBAction func OneView(sender: AnyObject) {
-        editingButton.enabled = false
+    @IBAction func OneView(_ sender: AnyObject) {
+        editingButton.isEnabled = false
         destinyNumber = 0
-        collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
         collectionView.reloadData()
     }
     
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return false
     }
     
@@ -152,22 +152,22 @@ class CollectionViewController: UIViewController{
         CoreDataStackManager.sharedInstance().saveContext()
     }
     
-    func unDeletePhoto(sender: UIButton) {
+    func unDeletePhoto(_ sender: UIButton) {
         
-        let i : Int = (sender.layer.valueForKey("index")) as! Int
+        let i : Int = (sender.layer.value(forKey: "index")) as! Int
         self.destinyCellNumber = self.simuDestinyCellNumber
         for m in 0...destinyCellNumber.count - 1 {
             if i == destinyCellNumber[m]{
-                bunchOfId.removeAtIndex(m)
-                simuDestinyCellNumber.removeAtIndex(m)
-                self.pinPoint1.removeAtIndex(m)
+                bunchOfId.remove(at: m)
+                simuDestinyCellNumber.remove(at: m)
+                self.pinPoint1.remove(at: m)
             }
         }
     }
     
-    func pathForIdentifier(identifier: String) -> String {
-        let documentsDirectoryURL: NSURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-        let fullURL = documentsDirectoryURL.URLByAppendingPathComponent(identifier)
-        return fullURL.path!
+    func pathForIdentifier(_ identifier: String) -> String {
+        let documentsDirectoryURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fullURL = documentsDirectoryURL.appendingPathComponent(identifier)
+        return fullURL.path
     }
 }
